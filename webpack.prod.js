@@ -4,14 +4,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    'monitor-new': './src/index.js',
-    'monitor-new.min': './src/index.js'
+    'monitor-game': './src/index.js',
+    'monitor-game.min': './src/index.js'
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
     chunkFilename: '[name].js',
-    library: 'MonitorNew',
+    library: 'MonitorGame',
     libraryTarget: 'umd',
     libraryExport: 'default'
   },
@@ -20,7 +20,10 @@ module.exports = {
     minimize: true,
     minimizer: [
       new TerserPlugin({
-        include: /\.min\.js$/
+        include: /\.min\.js$/,
+        terserOptions: {
+          ie8: true
+        }
       })
     ]
   },

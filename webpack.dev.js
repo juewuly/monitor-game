@@ -4,12 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    'monitor-new': './src/index.js',
+    'monitor-game': './src/index.js',
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    library: 'MonitorNew',
+    library: 'MonitorGame',
     libraryTarget: 'umd',
     libraryExport: 'default'
   },
@@ -27,7 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, `test/index.html`),
       filename: 'index.html',
-      chunks: ['monitor-new'],
+      chunks: ['monitor-game'],
       inject: false
     })
   ],
