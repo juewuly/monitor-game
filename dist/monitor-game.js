@@ -216,14 +216,29 @@ var cookie_cookie = /*#__PURE__*/function () {
 }();
 
 
+// CONCATENATED MODULE: ./src/local.js
+var isLocal; //有时候monitor.js会在file://或者res://协议下使用，判断下
+
+isLocal = true;
+
+try {
+  var protocol = location.protocol.toLowerCase();
+
+  if (protocol == 'http:' || protocol == 'https:') {
+    isLocal = false;
+  }
+} catch (e) {}
+
+/* harmony default export */ var local = (isLocal);
 // CONCATENATED MODULE: ./src/util/guid.js
+
 
 
 
 var guid_doc = document;
 var nav = navigator;
 var screen = window.screen;
-var domain = document.domain.toLowerCase();
+var domain = local ? '' : document.domain.toLowerCase();
 var ua = nav.userAgent.toLowerCase();
 var guidCookieDomains = ['360.cn', 'so.com', 'leidian.com'];
 
@@ -270,7 +285,7 @@ var guid_guid = /*#__PURE__*/function () {
       var id = cookie_cookie.get(guidKey);
 
       if (!id) {
-        id = [this.hash(isLocal ? '' : guid_doc.domain), this.guid(), +new Date() + Math.random() + Math.random()].join('.');
+        id = [this.hash(local ? '' : guid_doc.domain), this.guid(), +new Date() + Math.random() + Math.random()].join('.');
         var config = {
           expires: 24 * 3600 * 1000 * 300,
           path: '/'
@@ -435,7 +450,6 @@ var configInstance = config_config.Instance;
 var util_doc = document;
 var util_nav = navigator;
 var util_screen = window.screen;
-var util_domain = document.domain.toLowerCase();
 var util_ua = util_nav.userAgent.toLowerCase();
 
 var util_util = /*#__PURE__*/function () {
@@ -1028,9 +1042,6 @@ var log_log = /*#__PURE__*/function () {
 var monitor_configInstance = config_config.Instance;
 var monitor_doc = document;
 var monitor_nav = navigator;
-var monitor_screen = window.screen;
-var monitor_domain = document.domain.toLowerCase();
-var monitor_ua = monitor_nav.userAgent.toLowerCase();
 
 var monitor_Monitor = /*#__PURE__*/function () {
   function Monitor() {

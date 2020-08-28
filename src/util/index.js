@@ -12,7 +12,6 @@ const configInstance = config.Instance;
 const doc = document;
 const nav = navigator;
 const screen = window.screen;
-const domain = document.domain.toLowerCase();
 const ua = nav.userAgent.toLowerCase();
 
 export default class util {

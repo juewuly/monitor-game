@@ -1,9 +1,10 @@
 import Cookie from '../cookie';
+import isLocal from '../local';
 
 const doc = document;
 const nav = navigator;
 const screen = window.screen;
-const domain = document.domain.toLowerCase();
+const domain = isLocal ? '' : document.domain.toLowerCase();
 const ua = nav.userAgent.toLowerCase();
 let guidCookieDomains = ['360.cn', 'so.com', 'leidian.com']; 
 
