@@ -3,6 +3,7 @@ import data from './data';
 import ObjectH from './objectH';
 import NodeH from './nodeH';
 import config from './config';
+import log from './log';
 
 const configInstance = config.Instance;
 
@@ -46,27 +47,20 @@ export default class Monitor {
   }
 
   sendLog(url) {
-    let id = 'log_' + (+new Date);
-    let img = window['__qihoo_monitor_imgs'][id] = new Image();
-
-    img.onload = img.onerror = function() {
-      if(window.__qihoo_monitor_imgs && window['__qihoo_monitor_imgs'][id]) {
-        window['__qihoo_monitor_imgs'][id] = null;
-        delete window["__qihoo_monitor_imgs"][id];
-      }
-    };
-    img.src = url;
+    log.sendLog(url);
   }
 
   buildLog(params, url) {
-    throw new Error('Todo: buildLog');
+    console.log('buildLog...', params, url);
+    const requestUrl = log.buildLog(params, url);
+    this.sendLog(requestUrl);
   }
 
   log(params, type) {
     type = type || 'click';
 
     const url = this.config[type + 'Url'];
-    if(!url) {
+    if (!url) {
       alert('Error : the ' + type + 'url does not exist!');
     }
 
@@ -142,14 +136,13 @@ export default class Monitor {
     let that = this;
     NodeH.on(doc, 'mousedown', function(e) {
       let params = that.data.getClick(e);
-      console.log('click...params', params);
       that.log(params, 'click');
     });
 
-    NodeH.on(doc, 'keydown', function(e) {
-      let params = that.data.getKeydown(e);
-      that.log(params, 'click');
-    });
+    // NodeH.on(doc, 'keydown', function(e) {
+    //   let params = that.data.getKeydown(e);
+    //   that.log(params, 'click');
+    // });
 
     return this;
   }

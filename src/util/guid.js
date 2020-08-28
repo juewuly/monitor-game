@@ -1,3 +1,5 @@
+import Cookie from '../cookie';
+
 const doc = document;
 const nav = navigator;
 const screen = window.screen;

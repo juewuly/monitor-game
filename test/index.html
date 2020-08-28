@@ -7,8 +7,8 @@
 </head>
 <body>
   <div data-bk="outer">
-    <a href="/" data-bk="1111">test1</a>
-    <a href="/" data-bk="2222">test2</a>
+    <a href="#" data-bk="1111">test1</a>
+    <a href="#" data-bk="2222">test2</a>
   </div>
 
   <% for (var jsIndex in htmlWebpackPlugin.files.js) { %>
@@ -16,7 +16,13 @@
   <% } %>
 
   <script>
-    MonitorNew.Instance.getClickAndKeydown();
+    console.log('enter...');
+    MonitorNew.Instance.setConf({
+      trackUrl : 'http://s.360.cn/w360/s.htm',
+      clickUrl : 'http://s.360.cn/w360/c.htm',
+      clickHeatMapUrl: 'http://s.360.cn/w360/c.htm',
+      wpoUrl : 'http://s.360.cn/w360/p.htm'
+    }).getClickAndKeydown();
   </script>
 </body>
 </html>
