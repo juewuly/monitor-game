@@ -14,7 +14,7 @@ export default class guid {
 
   }
 
-  static get Instance() {
+  static Instance() {
     if (!this._instance) {
       this._instance = new guid();
     }
@@ -80,7 +80,7 @@ export default class guid {
     return id;
   }
 
-  get guid() {
+  guid() {
     if (!this._guid) {
       this._guid = this.getGuid();
     }

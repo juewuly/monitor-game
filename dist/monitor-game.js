@@ -310,7 +310,7 @@ var guid_guid = /*#__PURE__*/function () {
     }
   }, {
     key: "guid",
-    get: function get() {
+    value: function guid() {
       if (!this._guid) {
         this._guid = this.getGuid();
       }
@@ -319,7 +319,7 @@ var guid_guid = /*#__PURE__*/function () {
     }
   }], [{
     key: "Instance",
-    get: function get() {
+    value: function Instance() {
       if (!this._instance) {
         this._instance = new guid();
       }
@@ -355,7 +355,7 @@ var count_count = /*#__PURE__*/function () {
     }
   }, {
     key: "count",
-    get: function get() {
+    value: function count() {
       if (!this._count) {
         this._count = this.getCount();
       }
@@ -364,7 +364,7 @@ var count_count = /*#__PURE__*/function () {
     }
   }], [{
     key: "Instance",
-    get: function get() {
+    value: function Instance() {
       if (!this._instance) {
         this._instance = new count();
       }
@@ -393,18 +393,18 @@ var config_config = /*#__PURE__*/function () {
   }
 
   createClass_default()(config, [{
+    key: "config",
+    value: function config() {
+      return this._config;
+    }
+  }, {
     key: "set",
     value: function set(value) {
       this._config = value;
     }
-  }, {
-    key: "config",
-    get: function get() {
-      return this._config;
-    }
   }], [{
     key: "Instance",
-    get: function get() {
+    value: function Instance() {
       if (!this._instance) {
         this._instance = new config();
       }
@@ -1039,7 +1039,7 @@ var log_log = /*#__PURE__*/function () {
 
 
 
-var monitor_configInstance = config_config.Instance;
+var monitor_configInstance = config_config.Instance();
 var monitor_doc = document;
 var monitor_nav = navigator;
 
@@ -1052,6 +1052,26 @@ var monitor_Monitor = /*#__PURE__*/function () {
     key: "test",
     value: function test() {
       return 'test monitor';
+    }
+  }, {
+    key: "version",
+    value: function version() {
+      return 'version v1.0.0';
+    }
+  }, {
+    key: "util",
+    value: function util() {
+      return util_util;
+    }
+  }, {
+    key: "data",
+    value: function data() {
+      return data_data;
+    }
+  }, {
+    key: "config",
+    value: function config() {
+      return monitor_configInstance;
     }
   }, {
     key: "sendLog",
@@ -1069,7 +1089,7 @@ var monitor_Monitor = /*#__PURE__*/function () {
     key: "log",
     value: function log(params, type) {
       type = type || 'click';
-      var url = this.config[type + 'Url'];
+      var url = this.config()[type + 'Url'];
 
       if (!url) {
         alert('Error : the ' + type + 'url does not exist!');
@@ -1088,14 +1108,14 @@ var monitor_Monitor = /*#__PURE__*/function () {
         newConfig = key;
       }
 
-      this.config.set(objectH_objectH.mix(this.config, newConfig, true));
+      this.config().set(objectH_objectH.mix(this.config(), newConfig, true));
       return this;
     }
   }, {
     key: "setUrl",
     value: function setUrl(url) {
       if (url) {
-        this.util.getLocation = function () {
+        this.util().getLocation = function () {
           return url;
         };
       }
@@ -1106,7 +1126,7 @@ var monitor_Monitor = /*#__PURE__*/function () {
     key: "setProject",
     value: function setProject(prj) {
       if (prj) {
-        this.util.getProject = function () {
+        this.util().getProject = function () {
           return prj;
         };
       }
@@ -1155,7 +1175,7 @@ var monitor_Monitor = /*#__PURE__*/function () {
     value: function getClickAndKeydown() {
       var that = this;
       nodeH.on(monitor_doc, 'mousedown', function (e) {
-        var params = that.data.getClick(e);
+        var params = that.data().getClick(e);
         that.log(params, 'click');
       }); // NodeH.on(doc, 'keydown', function(e) {
       //   let params = that.data.getKeydown(e);
@@ -1164,29 +1184,9 @@ var monitor_Monitor = /*#__PURE__*/function () {
 
       return this;
     }
-  }, {
-    key: "version",
-    get: function get() {
-      return 'version v1.0.0';
-    }
-  }, {
-    key: "util",
-    get: function get() {
-      return util_util;
-    }
-  }, {
-    key: "data",
-    get: function get() {
-      return data_data;
-    }
-  }, {
-    key: "config",
-    get: function get() {
-      return monitor_configInstance;
-    }
   }], [{
     key: "Instance",
-    get: function get() {
+    value: function Instance() {
       if (!this._instance) {
         this._instance = new Monitor();
       }
@@ -1211,16 +1211,16 @@ var src_MonitorNew = /*#__PURE__*/function () {
 
   createClass_default()(MonitorNew, null, [{
     key: "Instance",
-    get: function get() {
+    value: function Instance() {
       if (!this._instance) {
-        this._instance = monitor_Monitor.Instance;
+        this._instance = monitor_Monitor.Instance();
       }
 
       return this._instance;
     }
   }, {
     key: "test",
-    get: function get() {
+    value: function test() {
       return 'test123';
     }
   }]);

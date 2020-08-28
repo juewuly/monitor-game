@@ -5,15 +5,15 @@ export default class MonitorNew {
 
   }
 
-  static get Instance() {
+  static Instance() {
     if (!this._instance) {
-      this._instance = Monitor.Instance;
+      this._instance = Monitor.Instance();
     }
 
     return this._instance;
   }
 
-  static get test() {
+  static test() {
     return 'test123';
   }
 

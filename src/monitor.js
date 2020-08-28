@@ -5,7 +5,7 @@ import NodeH from './nodeH';
 import config from './config';
 import log from './log';
 
-const configInstance = config.Instance;
+const configInstance = config.Instance();
 
 const doc = document;
 const nav = navigator;
@@ -15,7 +15,7 @@ export default class Monitor {
     
   }
 
-  static get Instance() {
+  static Instance() {
     if (!this._instance) {
       this._instance = new Monitor();
     }
@@ -27,19 +27,19 @@ export default class Monitor {
     return 'test monitor';
   }
 
-  get version() {
+  version() {
     return 'version v1.0.0';
   }
 
-  get util() {
+  util() {
     return util;
   }
 
-  get data() {
+  data() {
     return data;
   }
 
-  get config() {
+  config() {
     return configInstance;
   }
 
@@ -56,7 +56,7 @@ export default class Monitor {
   log(params, type) {
     type = type || 'click';
 
-    const url = this.config[type + 'Url'];
+    const url = this.config()[type + 'Url'];
     if (!url) {
       alert('Error : the ' + type + 'url does not exist!');
     }
@@ -72,13 +72,13 @@ export default class Monitor {
       newConfig = key;
     }
 
-    this.config.set(ObjectH.mix(this.config, newConfig, true));
+    this.config().set(ObjectH.mix(this.config(), newConfig, true));
     return this;
   }
 
   setUrl(url) {
     if (url) {
-      this.util.getLocation = function() {
+      this.util().getLocation = function() {
         return url;
       };
     }
@@ -87,7 +87,7 @@ export default class Monitor {
 
   setProject(prj) {
     if (prj) {
-      this.util.getProject = function() {
+      this.util().getProject = function() {
         return prj;
       };
     }
@@ -132,7 +132,7 @@ export default class Monitor {
   getClickAndKeydown() {
     let that = this;
     NodeH.on(doc, 'mousedown', function(e) {
-      let params = that.data.getClick(e);
+      let params = that.data().getClick(e);
       that.log(params, 'click');
     });
 

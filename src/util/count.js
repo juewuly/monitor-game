@@ -3,7 +3,7 @@ export default class count {
 
   }
 
-  static get Instance() {
+  static Instance() {
     if (!this._instance) {
       this._instance = new count();
     }
@@ -22,7 +22,7 @@ export default class count {
     return count;
   }
 
-  get count() {
+  count() {
     if (!this._count) {
       this._count = this.getCount();
     }

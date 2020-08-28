@@ -7,7 +7,7 @@ export default class config {
     }
   }
 
-  static get Instance() {
+  static Instance() {
     if (!this._instance) {
       this._instance = new config();
     }
@@ -15,7 +15,7 @@ export default class config {
     return this._instance;
   }
 
-  get config() {
+  config() {
     return this._config;
   }
 
