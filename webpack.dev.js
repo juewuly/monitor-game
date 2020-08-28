@@ -27,8 +27,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, `test/index.html`),
       filename: 'index.html',
-      // chunks: ['monitor-new'],
-      inject: true
+      chunks: ['monitor-new'],
+      inject: false
     })
   ],
   devServer: {

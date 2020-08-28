@@ -10,5 +10,13 @@
     <a href="/" data-bk="1111">test1</a>
     <a href="/" data-bk="2222">test2</a>
   </div>
+
+  <% for (var jsIndex in htmlWebpackPlugin.files.js) { %>
+    <script type="text/javascript" src="<%=htmlWebpackPlugin.files.js[jsIndex] %>"></script>
+  <% } %>
+
+  <script>
+    MonitorNew.Instance.getClickAndKeydown();
+  </script>
 </body>
 </html>
