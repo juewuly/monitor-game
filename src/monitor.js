@@ -5,6 +5,7 @@ import log from './log';
 
 const configInstance = config.Instance;
 const dataInstance = data.Instance;
+const logInstance = log.Instance;
 
 export default class Monitor {
   constructor() {
@@ -42,36 +43,14 @@ export default class Monitor {
     let that = this;
     NodeH.on(document, 'mousedown', function(e) {
       let params = dataInstance.getClickData(e);
-      that.log(params);
+      logInstance.send(params);
     });
 
     NodeH.on(document, 'keydown', function(e) {
       let params = dataInstance.getKeydownData(e);
-      that.log(params);
+      logInstance.send(params);
     });
 
     return this;
-  }
-
-  sendLog(url) {
-    log.sendLog(url);
-  }
-
-  buildLog(params, url) {
-    console.log('buildLog...', params, url);
-    if (params === false) {
-      return;
-    }
-    const requestUrl = log.buildLog(params, url);
-    this.sendLog(requestUrl);
-  }
-
-  log(params) {
-    const url = configInstance.getServiceUrl();
-    if (!url) {
-      alert('Error : the service url does not exist!');
-    }
-
-    this.buildLog(params, url);
   }
 }

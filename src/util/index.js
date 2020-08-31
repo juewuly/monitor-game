@@ -4,11 +4,8 @@ import StringH from '../stringH';
 
 const configInstance = config.Instance;
 
-
 const doc = document;
 const nav = navigator;
-const screen = window.screen;
-const ua = nav.userAgent.toLowerCase();
 
 export default class util {
   constructor() {

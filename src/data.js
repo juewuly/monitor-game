@@ -56,8 +56,8 @@ export default class data {
         let tId = target.id;
 
         result = {
-          f : form.action,
-          c : 'form:' + (form.name || formId),
+          // f : form.action,
+          // c : 'form:' + (form.name || formId),
           event_key : containerId
         };
 
@@ -67,8 +67,8 @@ export default class data {
         }
       } else {
         result = {
-          f : util.getHref(target),
-          c : util.getText(target),
+          // f : util.getHref(target),
+          // c : util.getText(target),
           event_key : containerId
         }
       }
@@ -76,8 +76,8 @@ export default class data {
       return result;
     } else if (tagName == 'AREA') {
       return {
-        f : util.getHref(target),
-        c : 'area:' + target.parentNode.name,
+        // f : util.getHref(target),
+        // c : 'area:' + target.parentNode.name,
         event_key : containerId
       };
     } else {
@@ -92,8 +92,8 @@ export default class data {
       text = util.getText(target);
 
       return {
-        f : util.getHref(target),
-        c : text ? text : (img ? img.src.match(/[^\/]+$/) : ''),
+        // f : util.getHref(target),
+        // c : text ? text : (img ? img.src.match(/[^\/]+$/) : ''),
         event_key : containerId
       }; 
     }
@@ -115,8 +115,8 @@ export default class data {
         let formId = form.id || '';
         let tId = target.id;
         let result = {
-            f : form.action,
-            c : 'form:' + (form.name || formId),
+            // f : form.action,
+            // c : 'form:' + (form.name || formId),
             event_key : containerId
           };
 
