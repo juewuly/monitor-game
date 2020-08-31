@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -158,11 +158,11 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _guid = _interopRequireDefault(__webpack_require__(11));
+var _guid = _interopRequireDefault(__webpack_require__(10));
 
 var _count = _interopRequireDefault(__webpack_require__(13));
 
-var _config = _interopRequireDefault(__webpack_require__(5));
+var _config = _interopRequireDefault(__webpack_require__(4));
 
 var _stringH = _interopRequireDefault(__webpack_require__(14));
 
@@ -406,96 +406,36 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var doc = document;
-
-var cookie = /*#__PURE__*/function () {
-  function cookie() {
-    (0, _classCallCheck2["default"])(this, cookie);
-  }
-
-  (0, _createClass2["default"])(cookie, null, [{
-    key: "get",
-    value: function get(key) {
-      try {
-        var a;
-        var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
-
-        if (a = doc.cookie.match(reg)) {
-          return unescape(a[2]);
-        } else {
-          return "";
-        }
-      } catch (e) {
-        return "";
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(key, val, options) {
-      options = options || {};
-      var expires = options.expires;
-
-      if (typeof expires === "number") {
-        expires = new Date();
-        expires.setTime(expires.getTime() + options.expires);
-      }
-
-      try {
-        doc.cookie = key + "=" + escape(val) + (expires ? ";expires=" + expires.toGMTString() : "") + (options.path ? ";path=" + options.path : "") + (options.domain ? "; domain=" + options.domain : "");
-      } catch (e) {}
-    }
-  }]);
-  return cookie;
-}();
-
-exports["default"] = cookie;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
+/**
+ * @author: liuyang9
+ * @description: 配置相关数据发送的url
+ */
 var config = /*#__PURE__*/function () {
-  function config() {
-    (0, _classCallCheck2["default"])(this, config);
-    this._config = {
-      clickUrl: null,
-      trackUrl: null,
-      areaIds: null
-    };
-  }
-
-  (0, _createClass2["default"])(config, [{
-    key: "config",
-    value: function config() {
-      return this._config;
-    }
-  }, {
-    key: "set",
-    value: function set(value) {
-      this._config = value;
-    }
-  }], [{
+  (0, _createClass2["default"])(config, null, [{
     key: "Instance",
-    value: function Instance() {
+    get: function get() {
       if (!this._instance) {
         this._instance = new config();
       }
 
       return this._instance;
+    }
+  }]);
+
+  function config() {
+    (0, _classCallCheck2["default"])(this, config);
+    this._serviceUrl = null;
+  }
+
+  (0, _createClass2["default"])(config, [{
+    key: "setServiceUrl",
+    value: function setServiceUrl(value) {
+      this._serviceUrl = value;
+    }
+  }, {
+    key: "serviceUrl",
+    get: function get() {
+      return this._serviceUrl;
     }
   }]);
   return config;
@@ -504,7 +444,7 @@ var config = /*#__PURE__*/function () {
 exports["default"] = config;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -525,61 +465,57 @@ var _util = _interopRequireDefault(__webpack_require__(3));
 
 var _eventH = _interopRequireDefault(__webpack_require__(15));
 
-var _nodeH = _interopRequireDefault(__webpack_require__(7));
-
-var _cookie = _interopRequireDefault(__webpack_require__(4));
+var _nodeH = _interopRequireDefault(__webpack_require__(6));
 
 var data = /*#__PURE__*/function () {
+  (0, _createClass2["default"])(data, null, [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new data();
+      }
+
+      return this._instance;
+    }
+  }]);
+
   function data() {
     (0, _classCallCheck2["default"])(this, data);
   }
 
-  (0, _createClass2["default"])(data, null, [{
-    key: "test",
-    value: function test() {
-      return 'test data';
-    }
-  }, {
-    key: "getBase",
-    value: function getBase() {
+  (0, _createClass2["default"])(data, [{
+    key: "getBaseData",
+    value: function getBaseData() {
       return {
         p: _util["default"].getProject(),
         u: _util["default"].getLocation(),
         id: _util["default"].getGuid(),
-        guid: _util["default"].getGuid()
+        guid: _util["default"].getGuid(),
+        case_key: _util["default"].getProject(),
+        biz_plat: 'term',
+        log_name: 'custom_event',
+        log_src: 'client',
+        time_str: this.getCurrentTime(),
+        browser_mid: '',
+        event_key: 'click'
       };
     }
   }, {
-    key: "getTrack",
-    value: function getTrack(cookies) {
-      var obj = {
-        b: _util["default"].getBrowser(),
-        c: _util["default"].getCount(),
-        r: _util["default"].getReferrer(),
-        fl: _util["default"].getFlashVer(),
-        sd: _util["default"].getColorDepth(),
-        sr: _util["default"].getScreenSize(),
-        ul: _util["default"].getLanguage()
-      }; //自定义要获取的 cookie
-
-      if (cookies) {
-        cookies = cookies.split(',');
-        var cdata = [];
-
-        for (var i = 0, length = cookies.length; i < length; i++) {
-          var value = _cookie["default"].get(cookies[i]);
-
-          cdata.push(cookies[i] + '=' + encodeURIComponent(value));
-        }
-
-        obj.uc = encodeURIComponent(cdata.join('&'));
-      }
-
-      return obj;
+    key: "getCurrentTime",
+    value: function getCurrentTime() {
+      var dtCur = new Date();
+      var yearCur = dtCur.getFullYear();
+      var monCur = dtCur.getMonth() + 1;
+      var dayCur = dtCur.getDate();
+      var hCur = dtCur.getHours();
+      var mCur = dtCur.getMinutes();
+      var sCur = dtCur.getSeconds();
+      var timeCur = yearCur + "-" + (monCur < 10 ? "0" + monCur : monCur) + "-" + (dayCur < 10 ? "0" + dayCur : dayCur) + " " + (hCur < 10 ? "0" + hCur : hCur) + ":" + (mCur < 10 ? "0" + mCur : mCur) + ":" + (sCur < 10 ? "0" + sCur : sCur);
+      return timeCur;
     }
   }, {
-    key: "getClick",
-    value: function getClick(e) {
+    key: "getClickData",
+    value: function getClickData(e) {
       e = _eventH["default"].fix(e || event);
       var target = e.target;
       var tagName = target.tagName;
@@ -639,8 +575,8 @@ var data = /*#__PURE__*/function () {
       return false;
     }
   }, {
-    key: "getKeydown",
-    value: function getKeydown(e) {
+    key: "getKeydownData",
+    value: function getKeydownData(e) {
       e = _eventH["default"].fix(e || event);
       if (e.keyCode != 13) return false;
       var target = e.target;
@@ -677,7 +613,7 @@ var data = /*#__PURE__*/function () {
 exports["default"] = data;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -713,7 +649,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -817,7 +753,7 @@ var objectH = /*#__PURE__*/function () {
 exports["default"] = objectH;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -834,7 +770,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _monitor = _interopRequireDefault(__webpack_require__(10));
+var _monitor = _interopRequireDefault(__webpack_require__(9));
 
 var MonitorNew = /*#__PURE__*/function () {
   function MonitorNew() {
@@ -843,17 +779,12 @@ var MonitorNew = /*#__PURE__*/function () {
 
   (0, _createClass2["default"])(MonitorNew, null, [{
     key: "Instance",
-    value: function Instance() {
+    get: function get() {
       if (!this._instance) {
-        this._instance = _monitor["default"].Instance();
+        this._instance = _monitor["default"].Instance;
       }
 
       return this._instance;
-    }
-  }, {
-    key: "test",
-    value: function test() {
-      return 'test123';
     }
   }]);
   return MonitorNew;
@@ -862,7 +793,7 @@ var MonitorNew = /*#__PURE__*/function () {
 exports["default"] = MonitorNew;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -881,20 +812,19 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
 var _util2 = _interopRequireDefault(__webpack_require__(3));
 
-var _data2 = _interopRequireDefault(__webpack_require__(6));
+var _data = _interopRequireDefault(__webpack_require__(5));
 
-var _objectH = _interopRequireDefault(__webpack_require__(8));
+var _objectH = _interopRequireDefault(__webpack_require__(7));
 
-var _nodeH = _interopRequireDefault(__webpack_require__(7));
+var _nodeH = _interopRequireDefault(__webpack_require__(6));
 
-var _config = _interopRequireDefault(__webpack_require__(5));
+var _config = _interopRequireDefault(__webpack_require__(4));
 
 var _log = _interopRequireDefault(__webpack_require__(17));
 
-var configInstance = _config["default"].Instance();
-
+var configInstance = _config["default"].Instance;
+var dataInstance = _data["default"].Instance;
 var doc = document;
-var nav = navigator;
 
 var Monitor = /*#__PURE__*/function () {
   function Monitor() {
@@ -902,29 +832,9 @@ var Monitor = /*#__PURE__*/function () {
   }
 
   (0, _createClass2["default"])(Monitor, [{
-    key: "test",
-    value: function test() {
-      return 'test monitor';
-    }
-  }, {
-    key: "version",
-    value: function version() {
-      return 'version v1.0.0';
-    }
-  }, {
     key: "util",
     value: function util() {
       return _util2["default"];
-    }
-  }, {
-    key: "data",
-    value: function data() {
-      return _data2["default"];
-    }
-  }, {
-    key: "config",
-    value: function config() {
-      return configInstance;
     }
   }, {
     key: "sendLog",
@@ -936,47 +846,26 @@ var Monitor = /*#__PURE__*/function () {
     value: function buildLog(params, url) {
       console.log('buildLog...', params, url);
 
+      if (params === false) {
+        return;
+      }
+
       var requestUrl = _log["default"].buildLog(params, url);
 
       this.sendLog(requestUrl);
     }
   }, {
     key: "log",
-    value: function log(params, type) {
-      type = type || 'click';
-      var url = this.config()[type + 'Url'];
+    value: function log(params) {
+      var url = configInstance.serviceUrl;
 
       if (!url) {
-        alert('Error : the ' + type + 'url does not exist!');
+        alert('Error : the service url does not exist!');
       }
 
       this.buildLog(params, url);
-    }
-  }, {
-    key: "setConf",
-    value: function setConf(key, val) {
-      var newConfig = {};
+    } // 设置项目标识
 
-      if (!_objectH["default"].isObject(key)) {
-        newConfig[key] = val;
-      } else {
-        newConfig = key;
-      }
-
-      this.config().set(_objectH["default"].mix(this.config(), newConfig, true));
-      return this;
-    }
-  }, {
-    key: "setUrl",
-    value: function setUrl(url) {
-      if (url) {
-        this.util().getLocation = function () {
-          return url;
-        };
-      }
-
-      return this;
-    }
   }, {
     key: "setProject",
     value: function setProject(prj) {
@@ -986,6 +875,13 @@ var Monitor = /*#__PURE__*/function () {
         };
       }
 
+      return this;
+    } // 设置数据发送到的url
+
+  }, {
+    key: "setServiceUrl",
+    value: function setServiceUrl(url) {
+      configInstance.setServiceUrl(url);
       return this;
     }
   }, {
@@ -1007,43 +903,30 @@ var Monitor = /*#__PURE__*/function () {
       return this;
     }
   }, {
-    key: "getTrack",
-    value: function getTrack(cookies) {
-      // var params = this.data.getTrack(cookies);
-      // this.log(params, 'track');
-      // return this;
-      throw new Error('Todo: getTrack');
-    }
-    /**
-     * 热力图
-     * @param {*} times 
-     * @param {*} minutes 
-     */
-
-  }, {
-    key: "getClickHeatmap",
-    value: function getClickHeatmap(times, minutes) {
-      throw new Error('Todo: getClickHeatmap');
-    }
-  }, {
     key: "getClickAndKeydown",
     value: function getClickAndKeydown() {
       var that = this;
 
       _nodeH["default"].on(doc, 'mousedown', function (e) {
-        var params = that.data().getClick(e);
+        var params = dataInstance.getClickData(e);
         that.log(params, 'click');
-      }); // NodeH.on(doc, 'keydown', function(e) {
-      //   let params = that.data.getKeydown(e);
-      //   that.log(params, 'click');
-      // });
+      });
 
+      _nodeH["default"].on(doc, 'keydown', function (e) {
+        var params = dataInstance.getKeydownData(e);
+        that.log(params, 'click');
+      });
 
       return this;
     }
+  }, {
+    key: "version",
+    get: function get() {
+      return 'version v1.0.0';
+    }
   }], [{
     key: "Instance",
-    value: function Instance() {
+    get: function get() {
       if (!this._instance) {
         this._instance = new Monitor();
       }
@@ -1057,7 +940,7 @@ var Monitor = /*#__PURE__*/function () {
 exports["default"] = Monitor;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1074,7 +957,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _cookie = _interopRequireDefault(__webpack_require__(4));
+var _cookie = _interopRequireDefault(__webpack_require__(11));
 
 var _local = _interopRequireDefault(__webpack_require__(12));
 
@@ -1107,19 +990,6 @@ var guid = /*#__PURE__*/function () {
       }
 
       return h;
-    }
-  }, {
-    key: "guid",
-    value: function guid() {
-      var s = [nav.appName, nav.version, nav.language || nav.browserLanguage, nav.platform, nav.userAgent, screen.width, 'x', screen.height, screen.colorDepth, doc.referrer].join("");
-      var sLen = s.length;
-      var hLen = window.history.length;
-
-      while (hLen) {
-        s += hLen-- ^ sLen++;
-      }
-
-      return (Math.round(Math.random() * 2147483647) ^ this.hash(s)) * 2147483647;
     }
   }, {
     key: "getGuid",
@@ -1161,9 +1031,22 @@ var guid = /*#__PURE__*/function () {
 
       return this._guid;
     }
+  }, {
+    key: "guid",
+    get: function get() {
+      var s = [nav.appName, nav.version, nav.language || nav.browserLanguage, nav.platform, nav.userAgent, screen.width, 'x', screen.height, screen.colorDepth, doc.referrer].join("");
+      var sLen = s.length;
+      var hLen = window.history.length;
+
+      while (hLen) {
+        s += hLen-- ^ sLen++;
+      }
+
+      return (Math.round(Math.random() * 2147483647) ^ this.hash(s)) * 2147483647;
+    }
   }], [{
     key: "Instance",
-    value: function Instance() {
+    get: function get() {
       if (!this._instance) {
         this._instance = new guid();
       }
@@ -1175,6 +1058,68 @@ var guid = /*#__PURE__*/function () {
 }();
 
 exports["default"] = guid;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+var doc = document;
+
+var cookie = /*#__PURE__*/function () {
+  function cookie() {
+    (0, _classCallCheck2["default"])(this, cookie);
+  }
+
+  (0, _createClass2["default"])(cookie, null, [{
+    key: "get",
+    value: function get(key) {
+      try {
+        var a;
+        var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
+
+        if (a = doc.cookie.match(reg)) {
+          return unescape(a[2]);
+        } else {
+          return "";
+        }
+      } catch (e) {
+        return "";
+      }
+    }
+  }, {
+    key: "set",
+    value: function set(key, val, options) {
+      options = options || {};
+      var expires = options.expires;
+
+      if (typeof expires === "number") {
+        expires = new Date();
+        expires.setTime(expires.getTime() + options.expires);
+      }
+
+      try {
+        doc.cookie = key + "=" + escape(val) + (expires ? ";expires=" + expires.toGMTString() : "") + (options.path ? ";path=" + options.path : "") + (options.domain ? "; domain=" + options.domain : "");
+      } catch (e) {}
+    }
+  }]);
+  return cookie;
+}();
+
+exports["default"] = cookie;
 
 /***/ }),
 /* 12 */
@@ -1384,10 +1329,11 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _objectH = _interopRequireDefault(__webpack_require__(8));
+var _objectH = _interopRequireDefault(__webpack_require__(7));
 
-var _data = _interopRequireDefault(__webpack_require__(6));
+var _data = _interopRequireDefault(__webpack_require__(5));
 
+var dataInstance = _data["default"].Instance;
 var lastLogParams = '';
 window.__qihoo_monitor_imgs = {};
 
@@ -1404,9 +1350,8 @@ var log = /*#__PURE__*/function () {
       }
 
       params = params || {};
-
-      var baseParams = _data["default"].getBase();
-
+      var baseParams = dataInstance.getBaseData();
+      console.log('baseParams...', baseParams);
       params = _objectH["default"].mix(baseParams, params, true);
 
       var logParams = url + _objectH["default"].encodeURIJson(params);
