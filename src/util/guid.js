@@ -37,18 +37,6 @@ export default class guid {
     return h;
   }
 
-  get guid() {
-    let s = [nav.appName, nav.version, nav.language || nav.browserLanguage, nav.platform, nav.userAgent, screen.width, 'x', screen.height, screen.colorDepth, doc.referrer].join("");
-    let sLen = s.length;
-    let hLen = window.history.length;
-
-    while(hLen) {
-      s += (hLen--) ^ (sLen++);
-    }
-
-    return (Math.round(Math.random() * 2147483647) ^ this.hash(s)) * 2147483647;
-  }
-
   getGuid() {
     let guidKey = '__guid';
     let id = Cookie.get(guidKey);
@@ -78,13 +66,5 @@ export default class guid {
     }
 
     return id;
-  }
-
-  guid() {
-    if (!this._guid) {
-      this._guid = this.getGuid();
-    }
-
-    return this._guid;
   }
 }

@@ -16,7 +16,7 @@ export default class config {
     this._serviceUrl = null;
   }
   
-  get serviceUrl() {
+  getServiceUrl() {
     return this._serviceUrl;
   }
 

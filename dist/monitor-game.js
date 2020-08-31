@@ -290,7 +290,7 @@ var util = /*#__PURE__*/function () {
   }, {
     key: "getGuid",
     value: function getGuid() {
-      return guidInstance.guid;
+      return guidInstance.getGuid();
     }
   }, {
     key: "getCount",
@@ -428,14 +428,14 @@ var config = /*#__PURE__*/function () {
   }
 
   (0, _createClass2["default"])(config, [{
+    key: "getServiceUrl",
+    value: function getServiceUrl() {
+      return this._serviceUrl;
+    }
+  }, {
     key: "setServiceUrl",
     value: function setServiceUrl(value) {
       this._serviceUrl = value;
-    }
-  }, {
-    key: "serviceUrl",
-    get: function get() {
-      return this._serviceUrl;
     }
   }]);
   return config;
@@ -857,7 +857,7 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "log",
     value: function log(params) {
-      var url = configInstance.serviceUrl;
+      var url = configInstance.getServiceUrl();
 
       if (!url) {
         alert('Error : the service url does not exist!');
@@ -1021,28 +1021,6 @@ var guid = /*#__PURE__*/function () {
       }
 
       return id;
-    }
-  }, {
-    key: "guid",
-    value: function guid() {
-      if (!this._guid) {
-        this._guid = this.getGuid();
-      }
-
-      return this._guid;
-    }
-  }, {
-    key: "guid",
-    get: function get() {
-      var s = [nav.appName, nav.version, nav.language || nav.browserLanguage, nav.platform, nav.userAgent, screen.width, 'x', screen.height, screen.colorDepth, doc.referrer].join("");
-      var sLen = s.length;
-      var hLen = window.history.length;
-
-      while (hLen) {
-        s += hLen-- ^ sLen++;
-      }
-
-      return (Math.round(Math.random() * 2147483647) ^ this.hash(s)) * 2147483647;
     }
   }], [{
     key: "Instance",

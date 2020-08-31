@@ -45,7 +45,7 @@ export default class Monitor {
   }
 
   log(params) {
-    const url = configInstance.serviceUrl;
+    const url = configInstance.getServiceUrl();
     if (!url) {
       alert('Error : the service url does not exist!');
     }

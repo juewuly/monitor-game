@@ -120,7 +120,7 @@ export default class util {
   }
 
   static getGuid() {
-    return guidInstance.guid;
+    return guidInstance.getGuid();
   }
 
   static getCount() {
