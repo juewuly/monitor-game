@@ -3,7 +3,7 @@
  * @description: 发送采集到的数据
  */
 
-import ObjectH from './objectH';
+import ObjectH from './util/objectH';
 import data from './data';
 import config from './config';
 

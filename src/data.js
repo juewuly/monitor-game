@@ -1,6 +1,6 @@
 import util from './util';
-import EventH from './eventH';
-import NodeH from './nodeH';
+import EventH from './util/eventH';
+import NodeH from './util/nodeH';
 import config from './config';
 
 const configInstance = config.Instance;
