@@ -6,9 +6,9 @@ import config from './config';
 import log from './log';
 
 const configInstance = config.Instance();
+const dataInstance = data.Instance;
 
 const doc = document;
-const nav = navigator;
 
 export default class Monitor {
   constructor() {
@@ -23,20 +23,12 @@ export default class Monitor {
     return this._instance;
   }
 
-  test() {
-    return 'test monitor';
-  }
-
   version() {
     return 'version v1.0.0';
   }
 
   util() {
     return util;
-  }
-
-  data() {
-    return data;
   }
 
   config() {
@@ -49,6 +41,9 @@ export default class Monitor {
 
   buildLog(params, url) {
     console.log('buildLog...', params, url);
+    if (params === false) {
+      return;
+    }
     const requestUrl = log.buildLog(params, url);
     this.sendLog(requestUrl);
   }
@@ -60,7 +55,6 @@ export default class Monitor {
     if (!url) {
       alert('Error : the ' + type + 'url does not exist!');
     }
-
     this.buildLog(params, url);
   }
 
@@ -73,15 +67,6 @@ export default class Monitor {
     }
 
     this.config().set(ObjectH.mix(this.config(), newConfig, true));
-    return this;
-  }
-
-  setUrl(url) {
-    if (url) {
-      this.util().getLocation = function() {
-        return url;
-      };
-    }
     return this;
   }
 
@@ -111,35 +96,17 @@ export default class Monitor {
     return this;
   }
 
-  getTrack(cookies) {
-    // var params = this.data.getTrack(cookies);
-    
-    // this.log(params, 'track');
-    // return this;
-
-    throw new Error('Todo: getTrack');
-  }
-
-  /**
-   * 热力图
-   * @param {*} times 
-   * @param {*} minutes 
-   */
-  getClickHeatmap(times, minutes) {
-    throw new Error('Todo: getClickHeatmap');
-  }
-
   getClickAndKeydown() {
     let that = this;
     NodeH.on(doc, 'mousedown', function(e) {
-      let params = that.data().getClick(e);
+      let params = dataInstance.getClickData(e);
       that.log(params, 'click');
     });
 
-    // NodeH.on(doc, 'keydown', function(e) {
-    //   let params = that.data.getKeydown(e);
-    //   that.log(params, 'click');
-    // });
+    NodeH.on(doc, 'keydown', function(e) {
+      let params = dataInstance.getKeydownData(e);
+      that.log(params, 'click');
+    });
 
     return this;
   }

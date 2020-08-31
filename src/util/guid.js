@@ -14,7 +14,7 @@ export default class guid {
 
   }
 
-  static Instance() {
+  static get Instance() {
     if (!this._instance) {
       this._instance = new guid();
     }
@@ -37,7 +37,7 @@ export default class guid {
     return h;
   }
 
-  guid() {
+  get guid() {
     let s = [nav.appName, nav.version, nav.language || nav.browserLanguage, nav.platform, nav.userAgent, screen.width, 'x', screen.height, screen.colorDepth, doc.referrer].join("");
     let sLen = s.length;
     let hLen = window.history.length;

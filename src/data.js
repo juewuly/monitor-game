@@ -1,50 +1,51 @@
 import util from './util';
 import EventH from './eventH';
 import NodeH from './nodeH';
-import Cookie from './cookie';
 
 export default class data {
+  static get Instance() {
+    if (!this._instance) {
+      this._instance = new data();
+    }
+
+    return this._instance;
+  }
+
   constructor() {
-
   }
 
-  static test() {
-    return 'test data';
-  }
-
-  static getBase() {
+  getBaseData() {
     return {
       p : util.getProject(),
       u : util.getLocation(),
       id : util.getGuid(),
-      guid : util.getGuid()
+      guid : util.getGuid(),
+
+      case_key: util.getProject(),
+      biz_plat: 'term',
+      log_name: 'custom_event',
+      log_src: 'client',
+      time_str: this.getCurrentTime(),
+      browser_mid: '',
+      event_key: 'click'
     };
   }
 
-  static getTrack(cookies) {
-    let obj = {
-      b : util.getBrowser(), 
-      c : util.getCount(),
-      r : util.getReferrer(),
-      fl : util.getFlashVer(),
-      sd: util.getColorDepth(),
-      sr: util.getScreenSize(),
-      ul: util.getLanguage()
-    };
-    //自定义要获取的 cookie
-    if (cookies) {
-      cookies = cookies.split(',');
-      let cdata = [];
-      for (let i=0, length=cookies.length; i<length; i++) {
-        let value = Cookie.get(cookies[i]);
-        cdata.push(cookies[i] + '=' + encodeURIComponent(value));
-      }
-      obj.uc = encodeURIComponent(cdata.join('&'));
-    }
-    return obj;
+  getCurrentTime() {
+    const dtCur = new Date();
+    const yearCur = dtCur.getFullYear();
+    const monCur = dtCur.getMonth() + 1;
+    const dayCur = dtCur.getDate();
+    const hCur = dtCur.getHours();
+    const mCur = dtCur.getMinutes();
+    const sCur = dtCur.getSeconds();
+    const timeCur = yearCur + "-" + (monCur < 10 ? "0" + monCur : monCur) + "-"
+        + (dayCur < 10 ? "0" + dayCur : dayCur) + " " + (hCur < 10 ? "0" + hCur : hCur)
+        + ":" + (mCur < 10 ? "0" + mCur : mCur) + ":" + (sCur < 10 ? "0" + sCur : sCur);
+    return timeCur;
   }
 
-  static getClick(e) {
+  getClickData(e) {
     e = EventH.fix(e || event);
     let target = e.target;
     let tagName = target.tagName;
@@ -104,7 +105,7 @@ export default class data {
     return false;
   }
 
-  static getKeydown(e) {
+  getKeydownData(e) {
     e = EventH.fix(e || event);
     if (e.keyCode != 13) return false;
 

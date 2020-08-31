@@ -17,9 +17,9 @@
 
   <script>
     console.log('enter...');
-    MonitorGame.Instance().setConf({
+    MonitorGame.Instance().setProject('testProject').setConf({
       trackUrl : 'http://s.360.cn/w360/s.htm',
-      clickUrl : 'http://s.360.cn/w360/c.htm',
+      clickUrl : 'https://dd.mgame.360.cn/t/game/common',
       clickHeatMapUrl: 'http://s.360.cn/w360/c.htm',
       wpoUrl : 'http://s.360.cn/w360/p.htm'
     }).getClickAndKeydown();

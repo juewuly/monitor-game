@@ -1,6 +1,8 @@
 import ObjectH from './objectH';
 import data from './data';
 
+const dataInstance = data.Instance;
+
 let lastLogParams = '';
 window.__qihoo_monitor_imgs = {};
 
@@ -15,7 +17,9 @@ export default class log {
     }
 
     params = params || {};
-    let baseParams = data.getBase();
+    let baseParams = dataInstance.getBaseData();
+    console.log('baseParams...', baseParams);
+
     params = ObjectH.mix(baseParams, params, true);
     const logParams = url + ObjectH.encodeURIJson(params);
     if (logParams == lastLogParams) {
