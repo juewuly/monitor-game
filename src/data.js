@@ -18,8 +18,6 @@ export default class data {
     return {
       p : util.getProject(),
       u : util.getLocation(),
-      id : util.getGuid(),
-      guid : util.getGuid(),
 
       case_key: util.getProject(),
       biz_plat: 'term',

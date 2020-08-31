@@ -1,11 +1,7 @@
-import guid from './guid';
-import count from './count';
 import config from '../config';
 import StringH from '../stringH';
 
 
-const guidInstance = guid.Instance;
-const countInstance = count.Instance;
 const configInstance = config.Instance;
 
 
@@ -17,10 +13,6 @@ const ua = nav.userAgent.toLowerCase();
 export default class util {
   constructor() {
 
-  }
-
-  static test() {
-    return 'test util';
   }
 
   static getColorDepth() {
@@ -117,14 +109,6 @@ export default class util {
     url = /\.(s?htm|php)/.test(url) ? url : (url.replace(/\/$/,'') + '/');
 
     return url;
-  }
-
-  static getGuid() {
-    return guidInstance.getGuid();
-  }
-
-  static getCount() {
-    return countInstance.count;
   }
 
   static getFlashVer() {

@@ -158,16 +158,10 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _guid = _interopRequireDefault(__webpack_require__(10));
-
-var _count = _interopRequireDefault(__webpack_require__(13));
-
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _stringH = _interopRequireDefault(__webpack_require__(14));
+var _stringH = _interopRequireDefault(__webpack_require__(10));
 
-var guidInstance = _guid["default"].Instance;
-var countInstance = _count["default"].Instance;
 var configInstance = _config["default"].Instance;
 var doc = document;
 var nav = navigator;
@@ -180,11 +174,6 @@ var util = /*#__PURE__*/function () {
   }
 
   (0, _createClass2["default"])(util, null, [{
-    key: "test",
-    value: function test() {
-      return 'test util';
-    }
-  }, {
     key: "getColorDepth",
     value: function getColorDepth() {
       return screen.colorDepth + '-bit';
@@ -286,16 +275,6 @@ var util = /*#__PURE__*/function () {
 
       url = /\.(s?htm|php)/.test(url) ? url : url.replace(/\/$/, '') + '/';
       return url;
-    }
-  }, {
-    key: "getGuid",
-    value: function getGuid() {
-      return guidInstance.getGuid();
-    }
-  }, {
-    key: "getCount",
-    value: function getCount() {
-      return countInstance.count;
     }
   }, {
     key: "getFlashVer",
@@ -463,7 +442,7 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
 var _util = _interopRequireDefault(__webpack_require__(3));
 
-var _eventH = _interopRequireDefault(__webpack_require__(15));
+var _eventH = _interopRequireDefault(__webpack_require__(11));
 
 var _nodeH = _interopRequireDefault(__webpack_require__(6));
 
@@ -489,8 +468,6 @@ var data = /*#__PURE__*/function () {
       return {
         p: _util["default"].getProject(),
         u: _util["default"].getLocation(),
-        id: _util["default"].getGuid(),
-        guid: _util["default"].getGuid(),
         case_key: _util["default"].getProject(),
         biz_plat: 'term',
         log_name: 'custom_event',
@@ -662,7 +639,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(16));
+var _typeof2 = _interopRequireDefault(__webpack_require__(12));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -820,7 +797,7 @@ var _nodeH = _interopRequireDefault(__webpack_require__(6));
 
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _log = _interopRequireDefault(__webpack_require__(17));
+var _log = _interopRequireDefault(__webpack_require__(13));
 
 var configInstance = _config["default"].Instance;
 var dataInstance = _data["default"].Instance;
@@ -957,251 +934,6 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _cookie = _interopRequireDefault(__webpack_require__(11));
-
-var _local = _interopRequireDefault(__webpack_require__(12));
-
-var doc = document;
-var nav = navigator;
-var screen = window.screen;
-var domain = _local["default"] ? '' : document.domain.toLowerCase();
-var ua = nav.userAgent.toLowerCase();
-var guidCookieDomains = ['360.cn', 'so.com', 'leidian.com'];
-
-var guid = /*#__PURE__*/function () {
-  function guid() {
-    (0, _classCallCheck2["default"])(this, guid);
-  }
-
-  (0, _createClass2["default"])(guid, [{
-    key: "hash",
-    value: function hash(s) {
-      var h = 0;
-      var g = 0;
-      var i = s.length - 1;
-
-      for (i; i >= 0; i--) {
-        var code = parseInt(s.charCodeAt(i), 10);
-        h = (h << 6 & 0xfffffff) + code + (code << 14);
-
-        if ((g = h & 0xfe00000) != 0) {
-          h = h ^ g >> 21;
-        }
-      }
-
-      return h;
-    }
-  }, {
-    key: "getGuid",
-    value: function getGuid() {
-      var guidKey = '__guid';
-
-      var id = _cookie["default"].get(guidKey);
-
-      if (!id) {
-        id = [this.hash(_local["default"] ? '' : doc.domain), this.guid(), +new Date() + Math.random() + Math.random()].join('.');
-        var config = {
-          expires: 24 * 3600 * 1000 * 300,
-          path: '/'
-        }; //如果是设置了guidCookieDomains，__guid放在guidCookieDomain域下
-
-        if (guidCookieDomains.length) {
-          for (var i = 0; i < guidCookieDomains.length; i++) {
-            var guidCookieDomain = guidCookieDomains[i],
-                gDomain = '.' + guidCookieDomain;
-
-            if (domain.indexOf(gDomain) > 0 && domain.lastIndexOf(gDomain) == domain.length - gDomain.length || domain == guidCookieDomain) {
-              config.domain = gDomain;
-              break;
-            }
-          }
-        }
-
-        _cookie["default"].set(guidKey, id, config);
-      }
-
-      return id;
-    }
-  }], [{
-    key: "Instance",
-    get: function get() {
-      if (!this._instance) {
-        this._instance = new guid();
-      }
-
-      return this._instance;
-    }
-  }]);
-  return guid;
-}();
-
-exports["default"] = guid;
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
-var doc = document;
-
-var cookie = /*#__PURE__*/function () {
-  function cookie() {
-    (0, _classCallCheck2["default"])(this, cookie);
-  }
-
-  (0, _createClass2["default"])(cookie, null, [{
-    key: "get",
-    value: function get(key) {
-      try {
-        var a;
-        var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
-
-        if (a = doc.cookie.match(reg)) {
-          return unescape(a[2]);
-        } else {
-          return "";
-        }
-      } catch (e) {
-        return "";
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(key, val, options) {
-      options = options || {};
-      var expires = options.expires;
-
-      if (typeof expires === "number") {
-        expires = new Date();
-        expires.setTime(expires.getTime() + options.expires);
-      }
-
-      try {
-        doc.cookie = key + "=" + escape(val) + (expires ? ";expires=" + expires.toGMTString() : "") + (options.path ? ";path=" + options.path : "") + (options.domain ? "; domain=" + options.domain : "");
-      } catch (e) {}
-    }
-  }]);
-  return cookie;
-}();
-
-exports["default"] = cookie;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-var isLocal; //有时候monitor.js会在file://或者res://协议下使用，判断下
-
-isLocal = true;
-
-try {
-  var protocol = location.protocol.toLowerCase();
-
-  if (protocol == 'http:' || protocol == 'https:') {
-    isLocal = false;
-  }
-} catch (e) {}
-
-var _default = isLocal;
-exports["default"] = _default;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
-var count = /*#__PURE__*/function () {
-  function count() {
-    (0, _classCallCheck2["default"])(this, count);
-  }
-
-  (0, _createClass2["default"])(count, [{
-    key: "getCount",
-    value: function getCount() {
-      var countKey = 'monitor_count';
-      var count = Cookie.get(countKey);
-      count = (parseInt(count) || 0) + 1;
-      Cookie.set(countKey, count, {
-        expires: 24 * 3600 * 1000,
-        path: '/'
-      });
-      return count;
-    }
-  }, {
-    key: "count",
-    value: function count() {
-      if (!this._count) {
-        this._count = this.getCount();
-      }
-
-      return this._count;
-    }
-  }], [{
-    key: "Instance",
-    value: function Instance() {
-      if (!this._instance) {
-        this._instance = new count();
-      }
-
-      return this._instance;
-    }
-  }]);
-  return count;
-}();
-
-exports["default"] = count;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
 var stringH = /*#__PURE__*/function () {
   function stringH() {
     (0, _classCallCheck2["default"])(this, stringH);
@@ -1219,7 +951,7 @@ var stringH = /*#__PURE__*/function () {
 exports["default"] = stringH;
 
 /***/ }),
-/* 15 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1268,7 +1000,7 @@ var eventH = /*#__PURE__*/function () {
 exports["default"] = eventH;
 
 /***/ }),
-/* 16 */
+/* 12 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -1290,7 +1022,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 17 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
