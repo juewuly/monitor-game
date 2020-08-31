@@ -1,6 +1,9 @@
 import util from './util';
 import EventH from './eventH';
 import NodeH from './nodeH';
+import config from './config';
+
+const configInstance = config.Instance;
 
 export default class data {
   static get Instance() {
@@ -16,16 +19,11 @@ export default class data {
 
   getBaseData() {
     return {
-      p : util.getProject(),
-      u : util.getLocation(),
-
-      case_key: util.getProject(),
+      case_key: configInstance.getProjectId(),
       biz_plat: 'term',
       log_name: 'custom_event',
       log_src: 'client',
       time_str: this.getCurrentTime(),
-      browser_mid: '',
-      event_key: 'click'
     };
   }
 
@@ -60,7 +58,7 @@ export default class data {
         result = {
           f : form.action,
           c : 'form:' + (form.name || formId),
-          cId : containerId
+          event_key : containerId
         };
 
         if ((formId == 'search-form' || formId == 'searchForm') && (tId == 'searchBtn' || tId == 'search-btn')) {
@@ -71,7 +69,7 @@ export default class data {
         result = {
           f : util.getHref(target),
           c : util.getText(target),
-          cId : containerId
+          event_key : containerId
         }
       }
 
@@ -80,7 +78,7 @@ export default class data {
       return {
         f : util.getHref(target),
         c : 'area:' + target.parentNode.name,
-        cId : containerId
+        event_key : containerId
       };
     } else {
       let img, text;
@@ -96,7 +94,7 @@ export default class data {
       return {
         f : util.getHref(target),
         c : text ? text : (img ? img.src.match(/[^\/]+$/) : ''),
-        cId : containerId
+        event_key : containerId
       }; 
     }
 
@@ -119,7 +117,7 @@ export default class data {
         let result = {
             f : form.action,
             c : 'form:' + (form.name || formId),
-            cId : containerId
+            event_key : containerId
           };
 
         if (tId == 'kw' || tId == 'search-kw' || tId == 'kw1') {

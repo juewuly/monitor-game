@@ -1,14 +1,10 @@
-import util from './util';
 import data from './data';
-import ObjectH from './objectH';
 import NodeH from './nodeH';
 import config from './config';
 import log from './log';
 
 const configInstance = config.Instance;
 const dataInstance = data.Instance;
-
-const doc = document;
 
 export default class Monitor {
   constructor() {
@@ -27,8 +23,34 @@ export default class Monitor {
     return 'version v1.0.0';
   }
 
-  util() {
-    return util;
+  // 设置项目标识
+  setProjectId(id) {
+    if (id) {
+      configInstance.setProjectId(id);
+    }
+    return this;
+  }
+
+  // 设置数据发送到的url
+  setServiceUrl(url) {
+    configInstance.setServiceUrl(url);
+    return this;
+  }
+
+  // 收集点击时的数据
+  getClickAndKeydown() {
+    let that = this;
+    NodeH.on(document, 'mousedown', function(e) {
+      let params = dataInstance.getClickData(e);
+      that.log(params);
+    });
+
+    NodeH.on(document, 'keydown', function(e) {
+      let params = dataInstance.getKeydownData(e);
+      that.log(params);
+    });
+
+    return this;
   }
 
   sendLog(url) {
@@ -51,53 +73,5 @@ export default class Monitor {
     }
 
     this.buildLog(params, url);
-  }
-
-  // 设置项目标识
-  setProject(prj) {
-    if (prj) {
-      this.util().getProject = function() {
-        return prj;
-      };
-    }
-    return this;
-  }
-
-  // 设置数据发送到的url
-  setServiceUrl(url) {
-    configInstance.setServiceUrl(url);
-    return this;
-  }
-
-  setId() {
-    let areaIds = [];
-    let i = 0;
-    let argument;
-
-    while (argument = arguments[i++]) {
-      if (!ObjectH.isArray(argument)) {
-        areaIds.push(argument);
-      } else {
-        areaIds = areaIds.concat(argument);
-      }
-    }
-
-    this.setConf('areaIds', areaIds);
-    return this;
-  }
-
-  getClickAndKeydown() {
-    let that = this;
-    NodeH.on(doc, 'mousedown', function(e) {
-      let params = dataInstance.getClickData(e);
-      that.log(params, 'click');
-    });
-
-    NodeH.on(doc, 'keydown', function(e) {
-      let params = dataInstance.getKeydownData(e);
-      that.log(params, 'click');
-    });
-
-    return this;
   }
 }

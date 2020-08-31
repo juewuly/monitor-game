@@ -15,79 +15,12 @@ export default class util {
 
   }
 
-  static getColorDepth() {
-    return screen.colorDepth + '-bit';
-  }
-
-  /**
-   * 获取语言
-   * @return {[type]} [description]
-   */
-  static getLanguage() {
-    return (nav.language || nav.browserLanguage).toLowerCase();
-  }
-
-  /**
-   * 获取屏幕大小
-   * @return {[type]} [description]
-   */
-  static getScreenSize() {
-    return screen.width + 'x' + screen.height;
-  }
-
-  static getProject() {
-    return '';
-  }
-
   static getReferrer() {
     const ref =  doc.referrer || '';
     if(ref.indexOf('pass') > -1 || ref.indexOf('pwd') > -1) {
         return '403';
     }
     return ref;
-  }
-
-  static getBrowser() {
-    const browsers = {
-      '360se-ua':'360se',
-      'TT':'tencenttraveler',
-      'Maxthon':'maxthon',
-      'GreenBrowser':'greenbrowser',
-      'Sogou':'se 1.x / se 2.x',
-      'TheWorld':'theworld'
-    };
-
-    for (let i in browsers){
-      if(ua.indexOf(browsers[i]) > -1) {
-        return i;
-      }
-    }
-
-    let is360se = false;
-    try{
-      if (+external.twGetVersion(external.twGetSecurityID(window)).replace(/\./g,"") > 1013) {
-        is360se = true;
-      }
-    } catch (e) { 
-
-    }
-
-    if (is360se) {
-      return "360se-noua";
-    }
-
-    let result = ua.match(/(msie|chrome|safari|firefox|opera|trident)/);
-    result = result ? result[0] : '';
-    
-    if (result == 'msie') {
-      result = ua.match(/msie[^;]+/) + '';
-    } else if (result == 'trident') {
-      ua.replace(/trident\/[0-9].*rv[ :]([0-9.]+)/ig, function(a, c) {
-        result = 'msie ' + c;
-      });
-    }
-
-    return result;
   }
 
   static getLocation() {
@@ -111,29 +44,6 @@ export default class util {
     return url;
   }
 
-  static getFlashVer() {
-    let ver = -1;
-    if (nav.plugins && nav.mimeTypes.length) {
-      let plugin = nav.plugins["Shockwave Flash"];
-      if (plugin && plugin.description) {
-        ver = plugin.description
-          .replace(/([a-zA-Z]|\s)+/, "")
-          .replace(/(\s)+r/, ".") + ".0";
-      }
-    } else if (window.ActiveXObject && !window.opera) {
-      try {
-        let c = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
-        if (c) {
-          let version = c.GetVariable("$version");
-          ver =  version.replace(/WIN/g,'').replace(/,/g,'.');
-        }
-      } catch(e) {}
-    }
-
-    ver = parseInt(ver, 10);
-    return ver;
-  }
-
   static getContainerId(el) {
     let areaStr;
     let name;
@@ -143,13 +53,14 @@ export default class util {
       areaStr = new RegExp('^(' + configInstance.areaIds.join('|') + ')$', 'ig');
     }
 
+    const dataKey = configInstance.getDataKey();
+
     while(el) {
       //bk模式
-      if (el.attributes && ('bk' in el.attributes || 'data-bk' in el.attributes) ) {
-        name = el.getAttribute('bk') || el.getAttribute('data-bk');
+      if (el.attributes && (dataKey in el.attributes || `data-${dataKey}` in el.attributes) ) {
+        name = el.getAttribute(dataKey) || el.getAttribute(`data-${dataKey}`);
 
         if(name) {
-          name = 'bk:' + name;
           return name.substr(0, maxLength);
         }
 

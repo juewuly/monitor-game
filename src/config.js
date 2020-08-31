@@ -1,6 +1,6 @@
 /**
  * @author: liuyang9
- * @description: 配置相关数据发送的url
+ * @description: 配置相关参数
  */
 
 export default class config {
@@ -13,14 +13,35 @@ export default class config {
   }
 
   constructor() {
+    // 服务端接收数据的url
     this._serviceUrl = null;
+    // 项目的标识
+    this._projectId = null;
+    // 即data-key里的key
+    this._dataKey = 'wk';
   }
   
   getServiceUrl() {
     return this._serviceUrl;
   }
 
-  setServiceUrl(value) {
-    this._serviceUrl = value;
+  setServiceUrl(url) {
+    this._serviceUrl = url;
+  }
+
+  setProjectId(id) {
+    this._projectId = id;
+  }
+
+  getProjectId() {
+    return this._projectId;
+  }
+
+  setDataKey(id) {
+    this._dataKey = id;
+  }
+
+  getDataKey() {
+    return this._dataKey;
   }
 }

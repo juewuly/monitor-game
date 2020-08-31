@@ -7,8 +7,8 @@
 </head>
 <body>
   <div data-bk="outer">
-    <a href="#" data-bk="1111">test1</a>
-    <a href="#" data-bk="2222">test2</a>
+    <a href="#" data-wk="1111">test1</a>
+    <a href="#" data-wk="2222">test2</a>
   </div>
 
   <% for (var jsIndex in htmlWebpackPlugin.files.js) { %>
@@ -18,7 +18,7 @@
   <script>
     console.log('enter...');
     MonitorGame.Instance
-    .setProject('testProject')
+    .setProjectId('testProject')
     .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
     .getClickAndKeydown();
   </script>
