@@ -5,7 +5,7 @@ import NodeH from './nodeH';
 import config from './config';
 import log from './log';
 
-const configInstance = config.Instance();
+const configInstance = config.Instance;
 const dataInstance = data.Instance;
 
 const doc = document;
@@ -15,7 +15,7 @@ export default class Monitor {
     
   }
 
-  static Instance() {
+  static get Instance() {
     if (!this._instance) {
       this._instance = new Monitor();
     }
@@ -23,16 +23,12 @@ export default class Monitor {
     return this._instance;
   }
 
-  version() {
+  get version() {
     return 'version v1.0.0';
   }
 
   util() {
     return util;
-  }
-
-  config() {
-    return configInstance;
   }
 
   sendLog(url) {
@@ -48,34 +44,28 @@ export default class Monitor {
     this.sendLog(requestUrl);
   }
 
-  log(params, type) {
-    type = type || 'click';
-
-    const url = this.config()[type + 'Url'];
+  log(params) {
+    const url = configInstance.serviceUrl;
     if (!url) {
-      alert('Error : the ' + type + 'url does not exist!');
+      alert('Error : the service url does not exist!');
     }
+
     this.buildLog(params, url);
   }
 
-  setConf(key, val) {
-    let newConfig = {};
-    if (!ObjectH.isObject(key)) {
-      newConfig[key] = val;
-    } else {
-      newConfig = key;
-    }
-
-    this.config().set(ObjectH.mix(this.config(), newConfig, true));
-    return this;
-  }
-
+  // 设置项目标识
   setProject(prj) {
     if (prj) {
       this.util().getProject = function() {
         return prj;
       };
     }
+    return this;
+  }
+
+  // 设置数据发送到的url
+  setServiceUrl(url) {
+    configInstance.setServiceUrl(url);
     return this;
   }
 

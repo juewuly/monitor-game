@@ -1,13 +1,10 @@
-export default class config {
-  constructor() {
-    this._config = {
-      clickUrl: null,
-      trackUrl: null,
-      areaIds : null
-    }
-  }
+/**
+ * @author: liuyang9
+ * @description: 配置相关数据发送的url
+ */
 
-  static Instance() {
+export default class config {
+  static get Instance() {
     if (!this._instance) {
       this._instance = new config();
     }
@@ -15,11 +12,15 @@ export default class config {
     return this._instance;
   }
 
-  config() {
-    return this._config;
+  constructor() {
+    this._serviceUrl = null;
+  }
+  
+  get serviceUrl() {
+    return this._serviceUrl;
   }
 
-  set(value) {
-    this._config = value;
+  setServiceUrl(value) {
+    this._serviceUrl = value;
   }
 }

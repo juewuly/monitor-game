@@ -17,12 +17,10 @@
 
   <script>
     console.log('enter...');
-    MonitorGame.Instance().setProject('testProject').setConf({
-      trackUrl : 'http://s.360.cn/w360/s.htm',
-      clickUrl : 'https://dd.mgame.360.cn/t/game/common',
-      clickHeatMapUrl: 'http://s.360.cn/w360/c.htm',
-      wpoUrl : 'http://s.360.cn/w360/p.htm'
-    }).getClickAndKeydown();
+    MonitorGame.Instance
+    .setProject('testProject')
+    .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
+    .getClickAndKeydown();
   </script>
 </body>
 </html>
