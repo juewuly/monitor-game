@@ -1,6 +1,6 @@
-import util from './util';
 import EventH from './util/eventH';
 import NodeH from './util/nodeH';
+import elementHelper from './util/element';
 import config from './config';
 
 const configInstance = config.Instance;
@@ -45,7 +45,7 @@ export default class data {
     e = EventH.fix(e || event);
     let target = e.target;
     let tagName = target.tagName;
-    let containerId = util.getContainerId(target);
+    let containerId = elementHelper.getContainerId(target);
 
     if (target.type && (target.type == 'submit' || target.type == 'button')) {
       let form = NodeH.parentNode(target, 'FORM');
@@ -89,7 +89,7 @@ export default class data {
       target = NodeH.parentNode(target, 'A');
       if(!target) return false;
 
-      text = util.getText(target);
+      text = elementHelper.getText(target);
 
       return {
         // f : util.getHref(target),
@@ -107,7 +107,7 @@ export default class data {
 
     let target = e.target;
     let tagName = target.tagName;
-    let containerId = util.getContainerId(target);
+    let containerId = elementHelper.getContainerId(target);
 
     if (tagName == 'INPUT') {
       let form = NodeH.parentNode(target, 'FORM');
