@@ -4,8 +4,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    'monitor-game': './src/index.js',
-    'monitor-game.min': './src/index.js'
+    'monitor-game': ['object-defineproperty-ie8', './src/index.js'],
+    'monitor-game.min': ['object-defineproperty-ie8', './src/index.js']
   },
   output: {
     path: path.join(__dirname, 'dist'),

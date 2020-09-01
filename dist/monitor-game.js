@@ -238,11 +238,11 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventH = _interopRequireDefault(__webpack_require__(7));
+var _eventH = _interopRequireDefault(__webpack_require__(9));
 
 var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
-var _element = _interopRequireDefault(__webpack_require__(8));
+var _element = _interopRequireDefault(__webpack_require__(10));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
@@ -427,6 +427,48 @@ exports["default"] = _default;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
+__webpack_require__(7);
+module.exports = __webpack_require__(8);
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var origDefineProperty = Object.defineProperty;
+
+var arePropertyDescriptorsSupported = function() {
+  var obj = {};
+  try {
+    origDefineProperty(obj, "x", { enumerable: false, value: obj });
+    for (var _ in obj) {
+      return false;
+    }
+    return obj.x === obj;
+  } catch (e) {
+    /* this is IE 8. */
+    return false;
+  }
+};
+var supportsDescriptors =
+  origDefineProperty && arePropertyDescriptorsSupported();
+
+if (!supportsDescriptors) {
+  Object.defineProperty = function(a, b, c) {
+    //IE8支持修改元素节点的属性
+    if (origDefineProperty && a.nodeType == 1) {
+      return origDefineProperty(a, b, c);
+    } else {
+      a[b] = c.value || (c.get && c.get());
+    }
+  };
+}
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -447,7 +489,7 @@ var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-var _log = _interopRequireDefault(__webpack_require__(10));
+var _log = _interopRequireDefault(__webpack_require__(12));
 
 /**
  * @author: liuyang9
@@ -524,7 +566,7 @@ var Monitor = /*#__PURE__*/function () {
 exports["default"] = Monitor;
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -573,7 +615,7 @@ var eventH = /*#__PURE__*/function () {
 exports["default"] = eventH;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -588,7 +630,7 @@ exports["default"] = void 0;
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-var _stringH = _interopRequireDefault(__webpack_require__(9));
+var _stringH = _interopRequireDefault(__webpack_require__(11));
 
 var configInstance = _config["default"].Instance;
 
@@ -649,7 +691,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -683,7 +725,7 @@ var stringH = /*#__PURE__*/function () {
 exports["default"] = stringH;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -700,7 +742,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _objectH = _interopRequireDefault(__webpack_require__(11));
+var _objectH = _interopRequireDefault(__webpack_require__(13));
 
 var _data = _interopRequireDefault(__webpack_require__(4));
 
@@ -805,7 +847,7 @@ var log = /*#__PURE__*/function () {
 exports["default"] = log;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -818,7 +860,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(12));
+var _typeof2 = _interopRequireDefault(__webpack_require__(14));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -909,7 +951,7 @@ var objectH = /*#__PURE__*/function () {
 exports["default"] = objectH;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
