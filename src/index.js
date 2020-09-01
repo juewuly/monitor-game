@@ -45,7 +45,6 @@ export default class Monitor {
 
   // 收集点击时的数据
   getClickAndKeydown() {
-    let that = this;
     NodeH.on(document, 'mousedown', function(e) {
       let params = dataInstance.getClickData(e);
       logInstance.send(params);
@@ -57,5 +56,10 @@ export default class Monitor {
     });
 
     return this;
+  }
+
+  // 开放单独发送打点信息
+  send(params) {
+    logInstance.send(params);
   }
 }

@@ -494,8 +494,6 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "getClickAndKeydown",
     value: function getClickAndKeydown() {
-      var that = this;
-
       _nodeH["default"].on(document, 'mousedown', function (e) {
         var params = dataInstance.getClickData(e);
         logInstance.send(params);
@@ -507,6 +505,12 @@ var Monitor = /*#__PURE__*/function () {
       });
 
       return this;
+    } // 开放单独发送打点信息
+
+  }, {
+    key: "send",
+    value: function send(params) {
+      logInstance.send(params);
     }
   }, {
     key: "version",
