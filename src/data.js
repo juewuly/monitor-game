@@ -3,7 +3,7 @@ import NodeH from './util/nodeH';
 import elementHelper from './util/element';
 import config from './config';
 
-export default class data {
+class data {
   static get Instance() {
     if (!this._instance) {
       this._instance = new data();
@@ -128,3 +128,5 @@ export default class data {
     return false;
   }
 }
+
+export default data.Instance;

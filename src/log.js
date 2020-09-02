@@ -7,8 +7,6 @@ import ObjectH from './util/objectH';
 import data from './data';
 import config from './config';
 
-const dataInstance = data.Instance;
-
 let lastLogParams = '';
 window.__qihoo_monitor_imgs = {};
 
@@ -51,7 +49,7 @@ export default class log {
   }
 
   updateParams(params) {
-    let otherParams = dataInstance.getBaseData();
+    let otherParams = data.getBaseData();
     return ObjectH.mix(otherParams, params || {}, true);
   }
 

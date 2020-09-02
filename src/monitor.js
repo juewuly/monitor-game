@@ -8,9 +8,6 @@ import NodeH from './util/nodeH';
 import config from './config';
 import log from './log';
 
-const dataInstance = data.Instance;
-const logInstance = log.Instance;
-
 class Monitor {
   static get Instance() {
     if (!this._instance) {
@@ -45,13 +42,13 @@ class Monitor {
   // 收集点击时的数据
   getClickAndKeydown() {
     NodeH.on(document, 'mousedown', function(e) {
-      let params = dataInstance.getClickData(e);
-      logInstance.send(params);
+      let params = data.getClickData(e);
+      log.send(params);
     });
 
     NodeH.on(document, 'keydown', function(e) {
-      let params = dataInstance.getKeydownData(e);
-      logInstance.send(params);
+      let params = data.getKeydownData(e);
+      log.send(params);
     });
 
     return this;
@@ -59,7 +56,7 @@ class Monitor {
 
   // 开放单独发送打点信息
   send(params) {
-    logInstance.send(params);
+    log.send(params);
   }
 }
 
