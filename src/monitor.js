@@ -8,7 +8,6 @@ import NodeH from './util/nodeH';
 import config from './config';
 import log from './log';
 
-const configInstance = config.Instance;
 const dataInstance = data.Instance;
 const logInstance = log.Instance;
 
@@ -26,20 +25,20 @@ class Monitor {
   }
 
   get version() {
-    return 'version v1.0.0';
+    return 'v1.0.0';
   }
 
   // 设置项目标识
   setProjectId(id) {
     if (id) {
-      configInstance.setProjectId(id);
+      config.setProjectId(id);
     }
     return this;
   }
 
   // 设置数据发送到的url
   setServiceUrl(url) {
-    configInstance.setServiceUrl(url);
+    config.setServiceUrl(url);
     return this;
   }
 

@@ -1,18 +1,16 @@
 import config from '../config';
 import StringH from './stringH';
 
-const configInstance = config.Instance;
-
 function getContainerId(el) {
   let areaStr;
   let name;
   let maxLength = 100;
 
-  if(configInstance.areaIds) {
-    areaStr = new RegExp('^(' + configInstance.areaIds.join('|') + ')$', 'ig');
+  if(config.areaIds) {
+    areaStr = new RegExp('^(' + config.areaIds.join('|') + ')$', 'ig');
   }
 
-  const dataKey = configInstance.getDataKey();
+  const dataKey = config.getDataKey();
 
   while (el) {
     //bk模式

@@ -8,7 +8,6 @@ import data from './data';
 import config from './config';
 
 const dataInstance = data.Instance;
-const configInstance = config.Instance;
 
 let lastLogParams = '';
 window.__qihoo_monitor_imgs = {};
@@ -26,7 +25,7 @@ export default class log {
   }
 
   send(params) {
-    const serviceUrl = configInstance.getServiceUrl();
+    const serviceUrl = config.getServiceUrl();
     if (!serviceUrl) {
       alert('Error : the service url does not exist!');
       return;
@@ -57,7 +56,7 @@ export default class log {
   }
 
   validateParams(params) {
-    const serviceUrl = configInstance.getServiceUrl();
+    const serviceUrl = config.getServiceUrl();
     const logParams = serviceUrl + ObjectH.encodeURIJson(params);
     if (logParams === lastLogParams) {
       return false;

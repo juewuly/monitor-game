@@ -3,8 +3,6 @@ import NodeH from './util/nodeH';
 import elementHelper from './util/element';
 import config from './config';
 
-const configInstance = config.Instance;
-
 export default class data {
   static get Instance() {
     if (!this._instance) {
@@ -19,7 +17,7 @@ export default class data {
 
   getBaseData() {
     return {
-      case_key: configInstance.getProjectId(),
+      case_key: config.getProjectId(),
       biz_plat: 'term',
       log_name: 'custom_event',
       log_src: 'client',

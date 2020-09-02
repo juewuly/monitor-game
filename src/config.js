@@ -3,7 +3,7 @@
  * @description: 配置相关参数
  */
 
-export default class config {
+class config {
   static get Instance() {
     if (!this._instance) {
       this._instance = new config();
@@ -45,3 +45,5 @@ export default class config {
     return this._dataKey;
   }
 }
+
+export default config.Instance;
