@@ -20,7 +20,8 @@
     MonitorGame
     .setProjectId('testProject')
     .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
-    .getClickAndKeydown();
+    .getClickAndKeydown()
+    .send({event_key: 'test'});
   </script>
 </body>
 </html>
