@@ -384,7 +384,8 @@ var data = /*#__PURE__*/function () {
   return data;
 }();
 
-exports["default"] = data;
+var _default = data.Instance;
+exports["default"] = _default;
 
 /***/ }),
 /* 5 */
@@ -528,9 +529,6 @@ var _log = _interopRequireDefault(__webpack_require__(13));
  * @author: liuyang9
  * @description: 新版打点
  */
-var dataInstance = _data["default"].Instance;
-var logInstance = _log["default"].Instance;
-
 var Monitor = /*#__PURE__*/function () {
   (0, _createClass2["default"])(Monitor, null, [{
     key: "Instance",
@@ -570,13 +568,15 @@ var Monitor = /*#__PURE__*/function () {
     key: "getClickAndKeydown",
     value: function getClickAndKeydown() {
       _nodeH["default"].on(document, 'mousedown', function (e) {
-        var params = dataInstance.getClickData(e);
-        logInstance.send(params);
+        var params = _data["default"].getClickData(e);
+
+        _log["default"].send(params);
       });
 
       _nodeH["default"].on(document, 'keydown', function (e) {
-        var params = dataInstance.getKeydownData(e);
-        logInstance.send(params);
+        var params = _data["default"].getKeydownData(e);
+
+        _log["default"].send(params);
       });
 
       return this;
@@ -585,7 +585,7 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "send",
     value: function send(params) {
-      logInstance.send(params);
+      _log["default"].send(params);
     }
   }, {
     key: "version",
@@ -770,23 +770,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(14));
+
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _objectH = _interopRequireDefault(__webpack_require__(14));
+var _objectH = _interopRequireDefault(__webpack_require__(15));
 
 var _data = _interopRequireDefault(__webpack_require__(4));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-/**
- * @author: liuyang9
- * @description: 发送采集到的数据
- */
-var dataInstance = _data["default"].Instance;
-var lastLogParams = '';
-window.__qihoo_monitor_imgs = {};
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var log = /*#__PURE__*/function () {
   (0, _createClass2["default"])(log, null, [{
@@ -802,57 +800,71 @@ var log = /*#__PURE__*/function () {
 
   function log() {
     (0, _classCallCheck2["default"])(this, log);
+    this.lastLogParams = '';
+    window.__monitor_game_imgs = {};
   }
 
   (0, _createClass2["default"])(log, [{
     key: "send",
     value: function send(params) {
+      if (!this.validateParams(params)) {
+        return;
+      }
+
+      var extendedParams = this.extendParams(params);
+      var url = this.generateUrl(extendedParams);
+      this.sendLog(url);
+    } // 根据打点参数信息
+
+  }, {
+    key: "generateUrl",
+    value: function generateUrl(params) {
       var serviceUrl = _config["default"].getServiceUrl();
 
-      if (!serviceUrl) {
-        alert('Error : the service url does not exist!');
-        return;
-      }
-
-      if (!params) {
-        return;
-      }
-
-      var newParams = this.updateParams(params);
-
-      if (!this.validateParams(newParams)) {
-        return;
-      }
-
-      var encodeParams = _objectH["default"].encodeURIJson(newParams); // 加上时间戳，防止缓存
+      var encodeParams = _objectH["default"].encodeURIJson(params); // 加上时间戳，防止缓存
 
 
       encodeParams += '&t=' + +new Date();
       var linkChart = serviceUrl.indexOf('?') > -1 ? '&' : '?';
       var url = "".concat(serviceUrl).concat(linkChart).concat(encodeParams);
-      this.sendLog(url);
-    }
+      return url;
+    } // 扩展参数
+
   }, {
-    key: "updateParams",
-    value: function updateParams(params) {
-      var otherParams = dataInstance.getBaseData();
-      return _objectH["default"].mix(otherParams, params || {}, true);
-    }
+    key: "extendParams",
+    value: function extendParams(params) {
+      var otherParams = _data["default"].getBaseData();
+
+      return _objectSpread(_objectSpread({}, otherParams), params);
+    } // 验证参数的有效性
+
   }, {
     key: "validateParams",
     value: function validateParams(params) {
+      var _this = this;
+
       var serviceUrl = _config["default"].getServiceUrl();
 
-      var logParams = serviceUrl + _objectH["default"].encodeURIJson(params);
+      var logParams = _objectH["default"].encodeURIJson(params);
 
-      if (logParams === lastLogParams) {
+      if (!serviceUrl) {
+        alert('Error : the service url does not exist!');
         return false;
       }
 
-      lastLogParams = logParams; //100ms后允许发相同数据
+      if (!params) {
+        return false;
+      }
+
+      if (logParams === this.lastLogParams) {
+        return false;
+      }
+
+      this.lastLogParams = logParams; //100ms后允许发相同数据
 
       setTimeout(function () {
-        lastLogParams = '';
+        console.log('this..lastLogParams.', _this.lastLogParams);
+        _this.lastLogParams = '';
       }, 100);
       return true;
     }
@@ -860,12 +872,12 @@ var log = /*#__PURE__*/function () {
     key: "sendLog",
     value: function sendLog(url) {
       var id = 'log_' + +new Date();
-      var img = window['__qihoo_monitor_imgs'][id] = new Image();
+      var img = window['__monitor_game_imgs'][id] = new Image();
 
       img.onload = img.onerror = function () {
-        if (window.__qihoo_monitor_imgs && window['__qihoo_monitor_imgs'][id]) {
-          window['__qihoo_monitor_imgs'][id] = null;
-          delete window["__qihoo_monitor_imgs"][id];
+        if (window.__monitor_game_imgs && window['__monitor_game_imgs'][id]) {
+          window['__monitor_game_imgs'][id] = null;
+          delete window["__monitor_game_imgs"][id];
         }
       };
 
@@ -875,10 +887,32 @@ var log = /*#__PURE__*/function () {
   return log;
 }();
 
-exports["default"] = log;
+var _default = log.Instance;
+exports["default"] = _default;
 
 /***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -891,7 +925,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(15));
+var _typeof2 = _interopRequireDefault(__webpack_require__(16));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -935,26 +969,6 @@ var objectH = /*#__PURE__*/function () {
       return obj !== null && (0, _typeof2["default"])(obj) == 'object';
     }
     /**
-     * 将源对象的属性并入到目标对象
-     * @param  {Object} des      目标对象
-     * @param  {Object} src      源对象，如果是数组，则依次并入
-     * @param  {Boolean} override 是否覆盖已有属性
-     * @return {Object}          des
-     */
-
-  }, {
-    key: "mix",
-    value: function mix(des, src, override) {
-      for (var i in src) {
-        //这里要加一个des[i]，是因为要照顾一些不可枚举的属性
-        if (override || !(des[i] || i in des)) {
-          des[i] = src[i];
-        }
-      }
-
-      return des;
-    }
-    /**
      * 将Object序列化为key=val键值对字符串，不处理val为数组的情况]
      * @param  {Object} json 需要序列化的对象
      * @return {String}      序列化后的字符串
@@ -965,12 +979,12 @@ var objectH = /*#__PURE__*/function () {
     value: function encodeURIJson(obj) {
       var result = [];
 
-      for (var p in obj) {
-        if (obj[p] == null) {
+      for (var key in obj) {
+        if (obj[key] == null) {
           continue;
         }
 
-        result.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        result.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
       }
 
       return result.join('&');
@@ -982,7 +996,7 @@ var objectH = /*#__PURE__*/function () {
 exports["default"] = objectH;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
