@@ -218,7 +218,8 @@ var config = /*#__PURE__*/function () {
   return config;
 }();
 
-exports["default"] = config;
+var _default = config.Instance;
+exports["default"] = _default;
 
 /***/ }),
 /* 4 */
@@ -238,15 +239,13 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventH = _interopRequireDefault(__webpack_require__(9));
+var _eventH = _interopRequireDefault(__webpack_require__(10));
 
 var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
-var _element = _interopRequireDefault(__webpack_require__(10));
+var _element = _interopRequireDefault(__webpack_require__(11));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
-
-var configInstance = _config["default"].Instance;
 
 var data = /*#__PURE__*/function () {
   (0, _createClass2["default"])(data, null, [{
@@ -268,7 +267,7 @@ var data = /*#__PURE__*/function () {
     key: "getBaseData",
     value: function getBaseData() {
       return {
-        case_key: configInstance.getProjectId(),
+        case_key: _config["default"].getProjectId(),
         biz_plat: 'term',
         log_name: 'custom_event',
         log_src: 'client',
@@ -479,6 +478,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _monitor = _interopRequireDefault(__webpack_require__(9));
+
+/**
+ * @author: liuyang9
+ * @description: monitor的api
+ */
+var _default = {
+  // 获取版本号
+  version: _monitor["default"].version,
+  // 设置项目标识
+  setProjectId: _monitor["default"].setProjectId,
+  // 设置服务端url
+  setServiceUrl: _monitor["default"].setServiceUrl,
+  // 监听单击事件的数据采集
+  getClickAndKeydown: _monitor["default"].getClickAndKeydown,
+  // 发送打点信息
+  send: _monitor["default"].send
+};
+exports["default"] = _default;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
@@ -489,13 +522,12 @@ var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-var _log = _interopRequireDefault(__webpack_require__(12));
+var _log = _interopRequireDefault(__webpack_require__(13));
 
 /**
  * @author: liuyang9
  * @description: 新版打点
  */
-var configInstance = _config["default"].Instance;
 var dataInstance = _data["default"].Instance;
 var logInstance = _log["default"].Instance;
 
@@ -520,7 +552,7 @@ var Monitor = /*#__PURE__*/function () {
     // 设置项目标识
     value: function setProjectId(id) {
       if (id) {
-        configInstance.setProjectId(id);
+        _config["default"].setProjectId(id);
       }
 
       return this;
@@ -529,7 +561,8 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "setServiceUrl",
     value: function setServiceUrl(url) {
-      configInstance.setServiceUrl(url);
+      _config["default"].setServiceUrl(url);
+
       return this;
     } // 收集点击时的数据
 
@@ -557,16 +590,17 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "version",
     get: function get() {
-      return 'version v1.0.0';
+      return 'v1.0.0';
     }
   }]);
   return Monitor;
 }();
 
-exports["default"] = Monitor;
+var _default = Monitor.Instance;
+exports["default"] = _default;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -615,7 +649,7 @@ var eventH = /*#__PURE__*/function () {
 exports["default"] = eventH;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -630,20 +664,18 @@ exports["default"] = void 0;
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-var _stringH = _interopRequireDefault(__webpack_require__(11));
-
-var configInstance = _config["default"].Instance;
+var _stringH = _interopRequireDefault(__webpack_require__(12));
 
 function getContainerId(el) {
   var areaStr;
   var name;
   var maxLength = 100;
 
-  if (configInstance.areaIds) {
-    areaStr = new RegExp('^(' + configInstance.areaIds.join('|') + ')$', 'ig');
+  if (_config["default"].areaIds) {
+    areaStr = new RegExp('^(' + _config["default"].areaIds.join('|') + ')$', 'ig');
   }
 
-  var dataKey = configInstance.getDataKey();
+  var dataKey = _config["default"].getDataKey();
 
   while (el) {
     //bk模式
@@ -691,7 +723,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -725,7 +757,7 @@ var stringH = /*#__PURE__*/function () {
 exports["default"] = stringH;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -742,7 +774,7 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _objectH = _interopRequireDefault(__webpack_require__(13));
+var _objectH = _interopRequireDefault(__webpack_require__(14));
 
 var _data = _interopRequireDefault(__webpack_require__(4));
 
@@ -753,7 +785,6 @@ var _config = _interopRequireDefault(__webpack_require__(3));
  * @description: 发送采集到的数据
  */
 var dataInstance = _data["default"].Instance;
-var configInstance = _config["default"].Instance;
 var lastLogParams = '';
 window.__qihoo_monitor_imgs = {};
 
@@ -776,7 +807,7 @@ var log = /*#__PURE__*/function () {
   (0, _createClass2["default"])(log, [{
     key: "send",
     value: function send(params) {
-      var serviceUrl = configInstance.getServiceUrl();
+      var serviceUrl = _config["default"].getServiceUrl();
 
       if (!serviceUrl) {
         alert('Error : the service url does not exist!');
@@ -810,7 +841,7 @@ var log = /*#__PURE__*/function () {
   }, {
     key: "validateParams",
     value: function validateParams(params) {
-      var serviceUrl = configInstance.getServiceUrl();
+      var serviceUrl = _config["default"].getServiceUrl();
 
       var logParams = serviceUrl + _objectH["default"].encodeURIJson(params);
 
@@ -847,7 +878,7 @@ var log = /*#__PURE__*/function () {
 exports["default"] = log;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -860,7 +891,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(14));
+var _typeof2 = _interopRequireDefault(__webpack_require__(15));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -951,7 +982,7 @@ var objectH = /*#__PURE__*/function () {
 exports["default"] = objectH;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
