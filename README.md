@@ -22,7 +22,7 @@ $ npm i monitor-game --save
 ```
 
 ## Usage
-1. 获取monitor实例`const monitorInstance = MonitorGame.Instance`。
+1. sdk在全局下的变量名是`MonitorGame`。
 2. 设置项目标识`setProjectId('testProject')`。
 3. 设置打点信息发送到的服务地址`setServiceUrl('apiUrl')`。
 4. 监听点击事件，并统计打点信息`getClickAndKeydown`。
@@ -30,7 +30,7 @@ $ npm i monitor-game --save
 
 ### Example
 ```javascript
-  MonitorGame.Instance
+  MonitorGame
     .setProjectId('testProject')
     .setServiceUrl('apiUrl')
     .getClickAndKeydown();
@@ -40,21 +40,21 @@ $ npm i monitor-game --save
 
 **设置项目id**
 ```javascript
-  MonitorGame.Instance.setProjectId('testProject');
+  MonitorGame.setProjectId('testProject');
 ```
 
 **设置打点发送到的服务端url**
 ```javascript
-  MonitorGame.Instance.setServiceUrl('apiUrl');
+  MonitorGame.setServiceUrl('apiUrl');
 ```
 
 **手动发送打点（可选）**
 ```javascript
-  MonitorGame.Instance.send({event_key: 'test'});
+  MonitorGame.send({event_key: 'test'});
 ```
 **监听点击事件进行打点**
 ```javascript
-  MonitorGame.Instance.getClickAndKeydown();
+  MonitorGame.getClickAndKeydown();
 ```
 
 ## License
