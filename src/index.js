@@ -12,7 +12,7 @@ const configInstance = config.Instance;
 const dataInstance = data.Instance;
 const logInstance = log.Instance;
 
-export default class Monitor {
+class Monitor {
   static get Instance() {
     if (!this._instance) {
       this._instance = new Monitor();
@@ -63,3 +63,5 @@ export default class Monitor {
     logInstance.send(params);
   }
 }
+
+export default Monitor.Instance;
