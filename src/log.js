@@ -7,10 +7,7 @@ import ObjectH from './util/objectH';
 import data from './data';
 import config from './config';
 
-let lastLogParams = '';
-window.__qihoo_monitor_imgs = {};
-
-export default class log {
+class log {
   static get Instance() {
     if (!this._instance) {
       this._instance = new log();
@@ -20,50 +17,63 @@ export default class log {
   }
 
   constructor() {
+    this.lastLogParams = '';
+    window.__monitor_game_imgs = {};
   }
 
   send(params) {
+    if (!this.validateParams(params)) {
+      return;
+    }
+
+    const extendedParams = this.extendParams(params);
+    const url = this.generateUrl(extendedParams);
+    this.sendLog(url);
+  }
+
+  // 根据打点参数信息
+  generateUrl(params) {
     const serviceUrl = config.getServiceUrl();
-    if (!serviceUrl) {
-      alert('Error : the service url does not exist!');
-      return;
-    }
-
-    if (!params) {
-      return;
-    }
-
-    const newParams = this.updateParams(params);
-
-    if (!this.validateParams(newParams)) {
-      return;
-    }
-
-    let encodeParams = ObjectH.encodeURIJson(newParams);
+    let encodeParams = ObjectH.encodeURIJson(params);
     // 加上时间戳，防止缓存
     encodeParams += '&t=' + (+ new Date());
     const linkChart = serviceUrl.indexOf('?') > -1 ? '&' : '?';
     const url = `${serviceUrl}${linkChart}${encodeParams}`;
-
-    this.sendLog(url);
+    return url;
   }
 
-  updateParams(params) {
+  // 扩展参数
+  extendParams(params) {
     let otherParams = data.getBaseData();
-    return ObjectH.mix(otherParams, params || {}, true);
+    return {
+      ...otherParams, 
+      ...params
+    }
   }
 
+  // 验证参数的有效性
   validateParams(params) {
     const serviceUrl = config.getServiceUrl();
-    const logParams = serviceUrl + ObjectH.encodeURIJson(params);
-    if (logParams === lastLogParams) {
+    const logParams = ObjectH.encodeURIJson(params);
+
+    if (!serviceUrl) {
+      alert('Error : the service url does not exist!');
       return false;
     }
 
-    lastLogParams = logParams
+    if (!params) {
+      return false;
+    }
+
+    if (logParams === this.lastLogParams) {
+      return false;
+    }
+
+    this.lastLogParams = logParams
     //100ms后允许发相同数据
-    setTimeout(function() {
-      lastLogParams = '';
+    setTimeout(() => {
+      console.log('this..lastLogParams.', this.lastLogParams);
+      this.lastLogParams = '';
     }, 100);
 
     return true;
@@ -71,14 +81,16 @@ export default class log {
 
   sendLog(url) {
     let id = 'log_' + (+new Date);
-    let img = window['__qihoo_monitor_imgs'][id] = new Image();
+    let img = window['__monitor_game_imgs'][id] = new Image();
 
     img.onload = img.onerror = function() {
-      if(window.__qihoo_monitor_imgs && window['__qihoo_monitor_imgs'][id]) {
-        window['__qihoo_monitor_imgs'][id] = null;
-        delete window["__qihoo_monitor_imgs"][id];
+      if(window.__monitor_game_imgs && window['__monitor_game_imgs'][id]) {
+        window['__monitor_game_imgs'][id] = null;
+        delete window["__monitor_game_imgs"][id];
       }
     };
     img.src = url;
   }
 }
+
+export default log.Instance;

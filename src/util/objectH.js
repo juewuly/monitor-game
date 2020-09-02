@@ -31,34 +31,17 @@ export default class objectH {
   }
 
   /**
-   * 将源对象的属性并入到目标对象
-   * @param  {Object} des      目标对象
-   * @param  {Object} src      源对象，如果是数组，则依次并入
-   * @param  {Boolean} override 是否覆盖已有属性
-   * @return {Object}          des
-   */
-  static mix(des, src, override) {
-    for (var i in src) {
-      //这里要加一个des[i]，是因为要照顾一些不可枚举的属性
-      if (override || !(des[i] || (i in des))) { 
-        des[i] = src[i];
-      }
-    }
-    return des;
-  }
-
-  /**
    * 将Object序列化为key=val键值对字符串，不处理val为数组的情况]
    * @param  {Object} json 需要序列化的对象
    * @return {String}      序列化后的字符串
    */
   static encodeURIJson(obj) {
-    var result = [];
-    for (var p in obj) {
-      if(obj[p] == null) {
+    let result = [];
+    for (let key in obj) {
+      if (obj[key] == null) {
         continue;
       }
-      result.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      result.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
     }
     return result.join('&');
   }
