@@ -54,11 +54,12 @@ class log {
     const logParams = paramsHelper.encodeParams(params);
 
     if (!serviceUrl) {
-      alert('Error : the service url does not exist!');
+      console.error('服务url未配置！');
       return false;
     }
 
-    if (!params) {
+    if (Object.prototype.toString.call(params).slice(8, -1) !== 'Object') {
+      console.error('参数类型异常，应传Object类型！');
       return false;
     }
 

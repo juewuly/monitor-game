@@ -35,13 +35,17 @@ class Monitor {
   // 收集点击时的数据
   getClickAndKeydown() {
     nodeHelper.on(document, 'mousedown', function(e) {
-      let params = data.getClickData(e);
-      log.send(params);
+      let metricData = data.getClickData(e);
+      if (metricData) {
+        log.send({ event_key: metricData });
+      }
     });
 
     nodeHelper.on(document, 'keydown', function(e) {
-      let params = data.getKeydownData(e);
-      log.send(params);
+      let metricData = data.getKeydownData(e);
+      if (metricData) {
+        log.send({ event_key: metricData });
+      }
     });
 
     return this;

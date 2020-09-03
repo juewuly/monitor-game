@@ -48,14 +48,7 @@ class data {
 
   getClickData(e) {
     e = eventHelper.fix(e);
-    const target = e.target;
-    const metricData = elementHelper.getMetricData(target);
-
-    if (!metricData) {
-      return false;
-    }
-
-    return { event_key: metricData };
+    return elementHelper.getMetricData(e.target);
   }
 
   getKeydownData(e) {
@@ -64,14 +57,7 @@ class data {
       return false;
     }
 
-    const target = e.target;
-    const metricData = elementHelper.getMetricData(target);
-
-    if (!metricData) {
-      return false;
-    }
-
-    return { event_key: metricData };
+    return elementHelper.getMetricData(e.target);
   }
 }
 
