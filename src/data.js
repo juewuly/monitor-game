@@ -1,5 +1,5 @@
-import elementHelper from './util/element';
 import eventHelper from './util/eventHelper';
+import elementHelper from './util/elementHelper';
 
 class data {
   static get Instance() {
@@ -49,13 +49,13 @@ class data {
   getClickData(e) {
     e = eventHelper.fix(e);
     const target = e.target;
-    const containerId = elementHelper.getContainerId(target);
+    const metricData = elementHelper.getMetricData(target);
 
-    if (!containerId) {
+    if (!metricData) {
       return false;
     }
 
-    return { event_key: containerId };
+    return { event_key: metricData };
   }
 
   getKeydownData(e) {
@@ -64,14 +64,14 @@ class data {
       return false;
     }
 
-    let target = e.target;
-    let containerId = elementHelper.getContainerId(target);
+    const target = e.target;
+    const metricData = elementHelper.getMetricData(target);
 
-    if (!containerId) {
+    if (!metricData) {
       return false;
     }
 
-    return { event_key: containerId };
+    return { event_key: metricData };
   }
 }
 
