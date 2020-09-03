@@ -3,9 +3,9 @@
  * @description: 发送采集到的数据
  */
 
-import ObjectH from './util/objectH';
 import data from './data';
 import config from './config';
+import paramsHelper from './util/paramsHelper';
 
 class log {
   static get Instance() {
@@ -34,7 +34,7 @@ class log {
   // 根据打点参数信息
   generateUrl(params) {
     const serviceUrl = config.getServiceUrl();
-    let encodeParams = ObjectH.encodeURIJson(params);
+    let encodeParams = paramsHelper.encodeParams(params);
     // 加上时间戳，防止缓存
     encodeParams += '&t=' + (+ new Date());
     const linkChart = serviceUrl.indexOf('?') > -1 ? '&' : '?';
@@ -51,7 +51,7 @@ class log {
   // 验证参数的有效性
   validateParams(params) {
     const serviceUrl = config.getServiceUrl();
-    const logParams = ObjectH.encodeURIJson(params);
+    const logParams = paramsHelper.encodeParams(params);
 
     if (!serviceUrl) {
       alert('Error : the service url does not exist!');
