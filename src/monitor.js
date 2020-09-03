@@ -4,9 +4,10 @@
  */
 
 import data from './data';
-import NodeH from './util/nodeH';
 import config from './config';
 import log from './log';
+import nodeHelper from './util/nodeHelper';
+
 
 class Monitor {
   static get Instance() {
@@ -33,12 +34,12 @@ class Monitor {
 
   // 收集点击时的数据
   getClickAndKeydown() {
-    NodeH.on(document, 'mousedown', function(e) {
+    nodeHelper.on(document, 'mousedown', function(e) {
       let params = data.getClickData(e);
       log.send(params);
     });
 
-    NodeH.on(document, 'keydown', function(e) {
+    nodeHelper.on(document, 'keydown', function(e) {
       let params = data.getKeydownData(e);
       log.send(params);
     });
@@ -52,7 +53,6 @@ class Monitor {
     return this;
   }
 
-  
   /**
    * 设置发送打点时附加的参数
    * @param {Object || Function} params 

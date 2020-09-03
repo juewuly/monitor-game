@@ -1,6 +1,6 @@
 import EventH from './util/eventH';
-import NodeH from './util/nodeH';
 import elementHelper from './util/element';
+import nodeHelper from './util/nodeHelper';
 
 class data {
   static get Instance() {
@@ -54,7 +54,7 @@ class data {
     let containerId = elementHelper.getContainerId(target);
 
     if (target.type && (target.type == 'submit' || target.type == 'button')) {
-      let form = NodeH.parentNode(target, 'FORM');
+      let form = nodeHelper.parentNode(target, 'FORM');
       let result = {};
 
       if (form) {
@@ -92,7 +92,7 @@ class data {
         img = target;
       }
 
-      target = NodeH.parentNode(target, 'A');
+      target = nodeHelper.parentNode(target, 'A');
       if(!target) return false;
 
       text = elementHelper.getText(target);
@@ -116,7 +116,7 @@ class data {
     let containerId = elementHelper.getContainerId(target);
 
     if (tagName == 'INPUT') {
-      let form = NodeH.parentNode(target, 'FORM');
+      let form = nodeHelper.parentNode(target, 'FORM');
       if (form) {
         let formId = form.id || '';
         let tId = target.id;
