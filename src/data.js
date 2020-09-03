@@ -1,5 +1,4 @@
 import elementHelper from './util/element';
-import nodeHelper from './util/nodeHelper';
 import eventHelper from './util/eventHelper';
 
 class data {
@@ -48,92 +47,31 @@ class data {
   }
 
   getClickData(e) {
-    e = eventHelper.fix(e || event);
-    let target = e.target;
-    let tagName = target.tagName;
-    let containerId = elementHelper.getContainerId(target);
+    e = eventHelper.fix(e);
+    const target = e.target;
+    const containerId = elementHelper.getContainerId(target);
 
-    if (target.type && (target.type == 'submit' || target.type == 'button')) {
-      let form = nodeHelper.parentNode(target, 'FORM');
-      let result = {};
-
-      if (form) {
-        let formId = form.id || '';
-        let tId = target.id;
-
-        result = {
-          // f : form.action,
-          // c : 'form:' + (form.name || formId),
-          event_key : containerId
-        };
-
-        if ((formId == 'search-form' || formId == 'searchForm') && (tId == 'searchBtn' || tId == 'search-btn')) {
-          let keywordEl = $('kw') || $('search-kw') || $('kw1');
-          result.w = keywordEl ? keywordEl.value : '';
-        }
-      } else {
-        result = {
-          // f : util.getHref(target),
-          // c : util.getText(target),
-          event_key : containerId
-        }
-      }
-
-      return result;
-    } else if (tagName == 'AREA') {
-      return {
-        // f : util.getHref(target),
-        // c : 'area:' + target.parentNode.name,
-        event_key : containerId
-      };
-    } else {
-      let img, text;
-      if(tagName == 'IMG') {
-        img = target;
-      }
-
-      target = nodeHelper.parentNode(target, 'A');
-      if(!target) return false;
-
-      text = elementHelper.getText(target);
-
-      return {
-        // f : util.getHref(target),
-        // c : text ? text : (img ? img.src.match(/[^\/]+$/) : ''),
-        event_key : containerId
-      }; 
+    if (!containerId) {
+      return false;
     }
 
-    return false;
+    return { event_key: containerId };
   }
 
   getKeydownData(e) {
-    e = eventHelper.fix(e || event);
-    if (e.keyCode != 13) return false;
+    e = eventHelper.fix(e);
+    if (e.keyCode != 13) {
+      return false;
+    }
 
     let target = e.target;
-    let tagName = target.tagName;
     let containerId = elementHelper.getContainerId(target);
 
-    if (tagName == 'INPUT') {
-      let form = nodeHelper.parentNode(target, 'FORM');
-      if (form) {
-        let formId = form.id || '';
-        let tId = target.id;
-        let result = {
-            // f : form.action,
-            // c : 'form:' + (form.name || formId),
-            event_key : containerId
-          };
-
-        if (tId == 'kw' || tId == 'search-kw' || tId == 'kw1') {
-          result.w = target.value;
-        } 
-
-        return result;
-      }
+    if (!containerId) {
+      return false;
     }
-    return false;
+
+    return { event_key: containerId };
   }
 }
 
