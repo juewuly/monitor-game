@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -154,17 +154,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(10));
+var _typeof2 = _interopRequireDefault(__webpack_require__(9));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventH = _interopRequireDefault(__webpack_require__(11));
+var _eventHelper = _interopRequireDefault(__webpack_require__(10));
 
-var _nodeH = _interopRequireDefault(__webpack_require__(5));
-
-var _element = _interopRequireDefault(__webpack_require__(12));
+var _elementHelper = _interopRequireDefault(__webpack_require__(11));
 
 var data = /*#__PURE__*/function () {
   (0, _createClass2["default"])(data, null, [{
@@ -220,95 +218,19 @@ var data = /*#__PURE__*/function () {
   }, {
     key: "getClickData",
     value: function getClickData(e) {
-      e = _eventH["default"].fix(e || event);
-      var target = e.target;
-      var tagName = target.tagName;
-
-      var containerId = _element["default"].getContainerId(target);
-
-      if (target.type && (target.type == 'submit' || target.type == 'button')) {
-        var form = _nodeH["default"].parentNode(target, 'FORM');
-
-        var result = {};
-
-        if (form) {
-          var formId = form.id || '';
-          var tId = target.id;
-          result = {
-            // f : form.action,
-            // c : 'form:' + (form.name || formId),
-            event_key: containerId
-          };
-
-          if ((formId == 'search-form' || formId == 'searchForm') && (tId == 'searchBtn' || tId == 'search-btn')) {
-            var keywordEl = $('kw') || $('search-kw') || $('kw1');
-            result.w = keywordEl ? keywordEl.value : '';
-          }
-        } else {
-          result = {
-            // f : util.getHref(target),
-            // c : util.getText(target),
-            event_key: containerId
-          };
-        }
-
-        return result;
-      } else if (tagName == 'AREA') {
-        return {
-          // f : util.getHref(target),
-          // c : 'area:' + target.parentNode.name,
-          event_key: containerId
-        };
-      } else {
-        var img, text;
-
-        if (tagName == 'IMG') {
-          img = target;
-        }
-
-        target = _nodeH["default"].parentNode(target, 'A');
-        if (!target) return false;
-        text = _element["default"].getText(target);
-        return {
-          // f : util.getHref(target),
-          // c : text ? text : (img ? img.src.match(/[^\/]+$/) : ''),
-          event_key: containerId
-        };
-      }
-
-      return false;
+      e = _eventHelper["default"].fix(e);
+      return _elementHelper["default"].getMetricData(e.target);
     }
   }, {
     key: "getKeydownData",
     value: function getKeydownData(e) {
-      e = _eventH["default"].fix(e || event);
-      if (e.keyCode != 13) return false;
-      var target = e.target;
-      var tagName = target.tagName;
+      e = _eventHelper["default"].fix(e);
 
-      var containerId = _element["default"].getContainerId(target);
-
-      if (tagName == 'INPUT') {
-        var form = _nodeH["default"].parentNode(target, 'FORM');
-
-        if (form) {
-          var formId = form.id || '';
-          var tId = target.id;
-          var result = {
-            // f : form.action,
-            // c : 'form:' + (form.name || formId),
-            event_key: containerId
-          };
-
-          if (tId == 'kw' || tId == 'search-kw' || tId == 'kw1') {
-            result.w = target.value;
-          }
-
-          return result;
-        }
+      if (e.keyCode != 13) {
+        return false;
       }
 
-      return false;
+      return _elementHelper["default"].getMetricData(e.target);
     }
   }]);
   return data;
@@ -392,48 +314,12 @@ exports["default"] = _default;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+__webpack_require__(6);
+module.exports = __webpack_require__(7);
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-var _default = {
-  on: function on(el, type, fn) {
-    if (el.addEventListener) {
-      el && el.addEventListener(type, fn, false);
-    } else {
-      el && el.attachEvent('on' + type, fn);
-    }
-  },
-  parentNode: function parentNode(el, tagName, deep) {
-    deep = deep || 5;
-    tagName = tagName.toUpperCase();
-
-    while (el && deep-- > 0) {
-      if (el.tagName === tagName) {
-        return el;
-      }
-
-      el = el.parentNode;
-    }
-
-    return null;
-  }
-};
-exports["default"] = _default;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(7);
-module.exports = __webpack_require__(8);
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 var origDefineProperty = Object.defineProperty;
@@ -467,7 +353,7 @@ if (!supportsDescriptors) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -480,7 +366,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _monitor = _interopRequireDefault(__webpack_require__(9));
+var _monitor = _interopRequireDefault(__webpack_require__(8));
 
 var _data = _interopRequireDefault(__webpack_require__(3));
 
@@ -491,21 +377,19 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 var _default = {
   // 获取版本号
   version: _monitor["default"].version,
-  // 设置项目标识
-  setProjectId: _monitor["default"].setProjectId,
   // 设置服务端url
   setServiceUrl: _monitor["default"].setServiceUrl,
   // 监听单击事件的数据采集
   getClickAndKeydown: _monitor["default"].getClickAndKeydown,
   // 发送打点信息
   send: _monitor["default"].send,
-  setBaseLogParams: _monitor["default"].setBaseLogParams,
+  setBaseLogData: _monitor["default"].setBaseLogData,
   getCurrentTime: _data["default"].getCurrentTime
 };
 exports["default"] = _default;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -524,11 +408,11 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
 var _data = _interopRequireDefault(__webpack_require__(3));
 
-var _nodeH = _interopRequireDefault(__webpack_require__(5));
-
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _log = _interopRequireDefault(__webpack_require__(14));
+var _log = _interopRequireDefault(__webpack_require__(12));
+
+var _nodeHelper = _interopRequireDefault(__webpack_require__(15));
 
 /**
  * @author: liuyang9
@@ -551,18 +435,8 @@ var Monitor = /*#__PURE__*/function () {
   }
 
   (0, _createClass2["default"])(Monitor, [{
-    key: "setProjectId",
-    // 设置项目标识
-    value: function setProjectId(id) {
-      if (id) {
-        _config["default"].setProjectId(id);
-      }
-
-      return this;
-    } // 设置数据发送到的url
-
-  }, {
     key: "setServiceUrl",
+    // 设置数据发送到的url
     value: function setServiceUrl(url) {
       _config["default"].setServiceUrl(url);
 
@@ -572,16 +446,24 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "getClickAndKeydown",
     value: function getClickAndKeydown() {
-      _nodeH["default"].on(document, 'mousedown', function (e) {
-        var params = _data["default"].getClickData(e);
+      _nodeHelper["default"].on(document, 'mousedown', function (e) {
+        var metricData = _data["default"].getClickData(e);
 
-        _log["default"].send(params);
+        if (metricData) {
+          _log["default"].send({
+            event_key: metricData
+          });
+        }
       });
 
-      _nodeH["default"].on(document, 'keydown', function (e) {
-        var params = _data["default"].getKeydownData(e);
+      _nodeHelper["default"].on(document, 'keydown', function (e) {
+        var metricData = _data["default"].getKeydownData(e);
 
-        _log["default"].send(params);
+        if (metricData) {
+          _log["default"].send({
+            event_key: metricData
+          });
+        }
       });
 
       return this;
@@ -594,9 +476,14 @@ var Monitor = /*#__PURE__*/function () {
 
       return this;
     }
+    /**
+     * 设置发送打点时附加的参数
+     * @param {Object || Function} params 
+     */
+
   }, {
-    key: "setBaseLogParams",
-    value: function setBaseLogParams(params) {
+    key: "setBaseLogData",
+    value: function setBaseLogData(params) {
       _data["default"].setBaseData(params);
 
       return this;
@@ -614,7 +501,7 @@ var _default = Monitor.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -636,6 +523,61 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+var eventHelper = /*#__PURE__*/function () {
+  function eventHelper() {
+    (0, _classCallCheck2["default"])(this, eventHelper);
+  }
+
+  (0, _createClass2["default"])(eventHelper, [{
+    key: "fix",
+    // 兼容ie8
+    value: function fix(e) {
+      if (!('target' in e)) {
+        var node = e.srcElement;
+
+        if (node && node.nodeType == 3) {
+          node = node.parentNode;
+        }
+
+        e.target = node;
+      }
+
+      return e;
+    }
+  }], [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new eventHelper();
+      }
+
+      return this._instance;
+    }
+  }]);
+  return eventHelper;
+}();
+
+var _default = eventHelper.Instance;
+exports["default"] = _default;
+
+/***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -653,36 +595,50 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var eventH = /*#__PURE__*/function () {
-  function eventH() {
-    (0, _classCallCheck2["default"])(this, eventH);
-  }
-  /**
-   * Event相关方法
-   * @type {Object}
-   */
+var _config = _interopRequireDefault(__webpack_require__(4));
 
-
-  (0, _createClass2["default"])(eventH, null, [{
-    key: "fix",
-    value: function fix(e) {
-      if (!('target' in e)) {
-        var node = e.srcElement || e.target;
-
-        if (node && node.nodeType == 3) {
-          node = node.parentNode;
-        }
-
-        e.target = node;
+var elementHelper = /*#__PURE__*/function () {
+  (0, _createClass2["default"])(elementHelper, null, [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new elementHelper();
       }
 
-      return e;
+      return this._instance;
     }
   }]);
-  return eventH;
+
+  function elementHelper() {
+    (0, _classCallCheck2["default"])(this, elementHelper);
+    // 埋点信息的最大长度
+    this._maxLength = 100;
+  }
+
+  (0, _createClass2["default"])(elementHelper, [{
+    key: "getMetricData",
+    value: function getMetricData(element) {
+      var dataKey = _config["default"].getDataKey();
+
+      var result = '';
+
+      while (element) {
+        if (element.attributes && (dataKey in element.attributes || "data-".concat(dataKey) in element.attributes)) {
+          result = element.getAttribute(dataKey) || element.getAttribute("data-".concat(dataKey));
+          return result.substr(0, this._maxLength);
+        }
+
+        element = element.parentNode;
+      }
+
+      return result;
+    }
+  }]);
+  return elementHelper;
 }();
 
-exports["default"] = eventH;
+var _default = elementHelper.Instance;
+exports["default"] = _default;
 
 /***/ }),
 /* 12 */
@@ -698,115 +654,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _config = _interopRequireDefault(__webpack_require__(4));
-
-var _stringH = _interopRequireDefault(__webpack_require__(13));
-
-function getContainerId(el) {
-  var areaStr;
-  var name;
-  var maxLength = 100;
-
-  if (_config["default"].areaIds) {
-    areaStr = new RegExp('^(' + _config["default"].areaIds.join('|') + ')$', 'ig');
-  }
-
-  var dataKey = _config["default"].getDataKey();
-
-  while (el) {
-    //bk模式
-    if (el.attributes && (dataKey in el.attributes || "data-".concat(dataKey) in el.attributes)) {
-      name = el.getAttribute(dataKey) || el.getAttribute("data-".concat(dataKey));
-
-      if (name) {
-        return name.substr(0, maxLength);
-      }
-
-      if (el.id) {
-        name = el.getAttribute('data-desc') || el.id;
-        return name.substr(0, maxLength);
-      }
-    } else if (areaStr) {
-      //setId模式
-      if (el.id && areaStr.test(el.id)) {
-        name = el.getAttribute('data-desc') || el.id;
-        return name.substr(0, maxLength);
-      }
-    }
-
-    el = el.parentNode;
-  }
-
-  return '';
-}
-
-function getText(el) {
-  var str = "";
-
-  if (el.tagName.toLowerCase() == 'input') {
-    str = el.getAttribute('text') || el.getAttribute('data-text') || el.value || el.title || '';
-  } else {
-    str = el.getAttribute('text') || el.getAttribute('data-text') || el.innerText || el.textContent || el.title || '';
-  }
-
-  return _stringH["default"].trim(str).substr(0, 100);
-}
-
-var _default = {
-  getContainerId: getContainerId,
-  getText: getText
-};
-exports["default"] = _default;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
-var stringH = /*#__PURE__*/function () {
-  function stringH() {
-    (0, _classCallCheck2["default"])(this, stringH);
-  }
-
-  (0, _createClass2["default"])(stringH, null, [{
-    key: "trim",
-    value: function trim(s) {
-      return s.replace(/^[\s\xa0\u3000]+|[\u3000\xa0\s]+$/g, "");
-    }
-  }]);
-  return stringH;
-}();
-
-exports["default"] = stringH;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _extends2 = _interopRequireDefault(__webpack_require__(15));
+var _extends2 = _interopRequireDefault(__webpack_require__(13));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -816,7 +664,7 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _paramsHelper = _interopRequireDefault(__webpack_require__(16));
+var _paramsHelper = _interopRequireDefault(__webpack_require__(14));
 
 /**
  * @author: liuyang9
@@ -884,11 +732,12 @@ var log = /*#__PURE__*/function () {
       var logParams = _paramsHelper["default"].encodeParams(params);
 
       if (!serviceUrl) {
-        alert('Error : the service url does not exist!');
+        console.error('服务url未配置！');
         return false;
       }
 
-      if (!params) {
+      if (Object.prototype.toString.call(params).slice(8, -1) !== 'Object') {
+        console.error('参数类型异常，应传Object类型！');
         return false;
       }
 
@@ -926,7 +775,7 @@ var _default = log.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -950,7 +799,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1007,6 +856,74 @@ var paramsHelper = /*#__PURE__*/function () {
 }();
 
 var _default = paramsHelper.Instance;
+exports["default"] = _default;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+var nodeHelper = /*#__PURE__*/function () {
+  function nodeHelper() {
+    (0, _classCallCheck2["default"])(this, nodeHelper);
+  }
+
+  (0, _createClass2["default"])(nodeHelper, [{
+    key: "on",
+    value: function on(element, type, func) {
+      if (!element) {
+        return;
+      }
+
+      if (element.addEventListener) {
+        element.addEventListener(type, func, false);
+      } else {
+        element.attachEvent('on' + type, func);
+      }
+    }
+  }, {
+    key: "parentNode",
+    value: function parentNode(element, tagName) {
+      var deep = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5;
+      tagName = tagName.toUpperCase();
+
+      while (element && deep-- > 0) {
+        if (element.tagName === tagName) {
+          return element;
+        }
+
+        element = element.parentNode;
+      }
+
+      return null;
+    }
+  }], [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new nodeHelper();
+      }
+
+      return this._instance;
+    }
+  }]);
+  return nodeHelper;
+}();
+
+var _default = nodeHelper.Instance;
 exports["default"] = _default;
 
 /***/ })
