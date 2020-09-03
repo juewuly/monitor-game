@@ -154,15 +154,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(9));
+var _typeof2 = _interopRequireDefault(__webpack_require__(10));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventHelper = _interopRequireDefault(__webpack_require__(10));
+var _eventHelper = _interopRequireDefault(__webpack_require__(11));
 
-var _elementHelper = _interopRequireDefault(__webpack_require__(11));
+var _elementHelper = _interopRequireDefault(__webpack_require__(12));
 
 var data = /*#__PURE__*/function () {
   (0, _createClass2["default"])(data, null, [{
@@ -276,11 +276,11 @@ var config = /*#__PURE__*/function () {
   function config() {
     (0, _classCallCheck2["default"])(this, config);
     // 服务端接收数据的url
-    this._serviceUrl = null; // 项目的标识
+    this._serviceUrl = null; // 打点指标在html标签中的属性名称
 
-    this._projectId = null; // 即data-key里的key
+    this._metricAttributeName = 'data-wk'; // 设置打点指标的参数名
 
-    this._dataKey = 'wk';
+    this._metricParamName = 'metric';
   }
 
   (0, _createClass2["default"])(config, [{
@@ -294,14 +294,24 @@ var config = /*#__PURE__*/function () {
       this._serviceUrl = url;
     }
   }, {
-    key: "setDataKey",
-    value: function setDataKey(id) {
-      this._dataKey = id;
+    key: "setMetricAttributeName",
+    value: function setMetricAttributeName(name) {
+      this._metricAttributeName = name;
     }
   }, {
-    key: "getDataKey",
-    value: function getDataKey() {
-      return this._dataKey;
+    key: "getMetricAttributeName",
+    value: function getMetricAttributeName() {
+      return this._metricAttributeName;
+    }
+  }, {
+    key: "setMetricParamName",
+    value: function setMetricParamName(name) {
+      this._metricParamName = name;
+    }
+  }, {
+    key: "getMetricParamName",
+    value: function getMetricParamName() {
+      return this._metricParamName;
     }
   }]);
   return config;
@@ -384,7 +394,9 @@ var _default = {
   // 发送打点信息
   send: _monitor["default"].send,
   setBaseLogData: _monitor["default"].setBaseLogData,
-  getCurrentTime: _data["default"].getCurrentTime
+  getCurrentTime: _data["default"].getCurrentTime,
+  setMetricAttributeName: _monitor["default"].setMetricAttributeName,
+  setMetricParamName: _monitor["default"].setMetricParamName
 };
 exports["default"] = _default;
 
@@ -402,6 +414,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(9));
+
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
@@ -410,9 +424,9 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _log = _interopRequireDefault(__webpack_require__(12));
+var _log = _interopRequireDefault(__webpack_require__(13));
 
-var _nodeHelper = _interopRequireDefault(__webpack_require__(15));
+var _nodeHelper = _interopRequireDefault(__webpack_require__(16));
 
 /**
  * @author: liuyang9
@@ -450,9 +464,7 @@ var Monitor = /*#__PURE__*/function () {
         var metricData = _data["default"].getClickData(e);
 
         if (metricData) {
-          _log["default"].send({
-            event_key: metricData
-          });
+          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData));
         }
       });
 
@@ -460,9 +472,7 @@ var Monitor = /*#__PURE__*/function () {
         var metricData = _data["default"].getKeydownData(e);
 
         if (metricData) {
-          _log["default"].send({
-            event_key: metricData
-          });
+          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData));
         }
       });
 
@@ -489,6 +499,20 @@ var Monitor = /*#__PURE__*/function () {
       return this;
     }
   }, {
+    key: "setMetricAttributeName",
+    value: function setMetricAttributeName(name) {
+      _config["default"].setMetricAttributeName(name);
+
+      return this;
+    }
+  }, {
+    key: "setMetricParamName",
+    value: function setMetricParamName(name) {
+      _config["default"].setMetricParamName(name);
+
+      return this;
+    }
+  }, {
     key: "version",
     get: function get() {
       return 'v1.0.0';
@@ -502,6 +526,27 @@ exports["default"] = _default;
 
 /***/ }),
 /* 9 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -523,7 +568,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -578,7 +623,7 @@ var _default = eventHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -618,13 +663,13 @@ var elementHelper = /*#__PURE__*/function () {
   (0, _createClass2["default"])(elementHelper, [{
     key: "getMetricData",
     value: function getMetricData(element) {
-      var dataKey = _config["default"].getDataKey();
+      var attributeName = _config["default"].getMetricAttributeName();
 
       var result = '';
 
       while (element) {
-        if (element.attributes && (dataKey in element.attributes || "data-".concat(dataKey) in element.attributes)) {
-          result = element.getAttribute(dataKey) || element.getAttribute("data-".concat(dataKey));
+        if (element.attributes && (attributeName in element.attributes || "data-".concat(attributeName) in element.attributes)) {
+          result = element.getAttribute(attributeName) || element.getAttribute("data-".concat(attributeName));
           return result.substr(0, this._maxLength);
         }
 
@@ -641,7 +686,7 @@ var _default = elementHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -654,7 +699,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _extends2 = _interopRequireDefault(__webpack_require__(13));
+var _extends2 = _interopRequireDefault(__webpack_require__(14));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -664,7 +709,7 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _paramsHelper = _interopRequireDefault(__webpack_require__(14));
+var _paramsHelper = _interopRequireDefault(__webpack_require__(15));
 
 /**
  * @author: liuyang9
@@ -775,7 +820,7 @@ var _default = log.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -799,7 +844,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -859,7 +904,7 @@ var _default = paramsHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
