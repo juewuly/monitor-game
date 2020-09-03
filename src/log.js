@@ -45,10 +45,7 @@ class log {
   // 扩展参数
   extendParams(params) {
     let otherParams = data.getBaseData();
-    return {
-      ...otherParams, 
-      ...params
-    }
+    return Object.assign(otherParams, params);
   }
 
   // 验证参数的有效性

@@ -770,7 +770,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(14));
+var _extends2 = _interopRequireDefault(__webpack_require__(14));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -782,10 +782,10 @@ var _data = _interopRequireDefault(__webpack_require__(4));
 
 var _config = _interopRequireDefault(__webpack_require__(3));
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+/**
+ * @author: liuyang9
+ * @description: 发送采集到的数据
+ */
 var log = /*#__PURE__*/function () {
   (0, _createClass2["default"])(log, null, [{
     key: "Instance",
@@ -835,7 +835,7 @@ var log = /*#__PURE__*/function () {
     value: function extendParams(params) {
       var otherParams = _data["default"].getBaseData();
 
-      return _objectSpread(_objectSpread({}, otherParams), params);
+      return (0, _extends2["default"])(otherParams, params);
     } // 验证参数的有效性
 
   }, {
@@ -894,22 +894,25 @@ exports["default"] = _default;
 /* 14 */
 /***/ (function(module, exports) {
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-  return obj;
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
 }
 
-module.exports = _defineProperty;
+module.exports = _extends;
 
 /***/ }),
 /* 15 */
