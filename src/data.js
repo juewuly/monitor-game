@@ -1,6 +1,6 @@
-import EventH from './util/eventH';
 import elementHelper from './util/element';
 import nodeHelper from './util/nodeHelper';
+import eventHelper from './util/eventHelper';
 
 class data {
   static get Instance() {
@@ -48,7 +48,7 @@ class data {
   }
 
   getClickData(e) {
-    e = EventH.fix(e || event);
+    e = eventHelper.fix(e || event);
     let target = e.target;
     let tagName = target.tagName;
     let containerId = elementHelper.getContainerId(target);
@@ -108,7 +108,7 @@ class data {
   }
 
   getKeydownData(e) {
-    e = EventH.fix(e || event);
+    e = eventHelper.fix(e || event);
     if (e.keyCode != 13) return false;
 
     let target = e.target;
