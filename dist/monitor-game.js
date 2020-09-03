@@ -154,98 +154,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
-
-var _createClass2 = _interopRequireDefault(__webpack_require__(2));
-
-/**
- * @author: liuyang9
- * @description: 配置相关参数
- */
-var config = /*#__PURE__*/function () {
-  (0, _createClass2["default"])(config, null, [{
-    key: "Instance",
-    get: function get() {
-      if (!this._instance) {
-        this._instance = new config();
-      }
-
-      return this._instance;
-    }
-  }]);
-
-  function config() {
-    (0, _classCallCheck2["default"])(this, config);
-    // 服务端接收数据的url
-    this._serviceUrl = null; // 项目的标识
-
-    this._projectId = null; // 即data-key里的key
-
-    this._dataKey = 'wk';
-  }
-
-  (0, _createClass2["default"])(config, [{
-    key: "getServiceUrl",
-    value: function getServiceUrl() {
-      return this._serviceUrl;
-    }
-  }, {
-    key: "setServiceUrl",
-    value: function setServiceUrl(url) {
-      this._serviceUrl = url;
-    }
-  }, {
-    key: "setProjectId",
-    value: function setProjectId(id) {
-      this._projectId = id;
-    }
-  }, {
-    key: "getProjectId",
-    value: function getProjectId() {
-      return this._projectId;
-    }
-  }, {
-    key: "setDataKey",
-    value: function setDataKey(id) {
-      this._dataKey = id;
-    }
-  }, {
-    key: "getDataKey",
-    value: function getDataKey() {
-      return this._dataKey;
-    }
-  }]);
-  return config;
-}();
-
-var _default = config.Instance;
-exports["default"] = _default;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
+var _typeof2 = _interopRequireDefault(__webpack_require__(10));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventH = _interopRequireDefault(__webpack_require__(10));
+var _eventH = _interopRequireDefault(__webpack_require__(11));
 
 var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
-var _element = _interopRequireDefault(__webpack_require__(11));
-
-var _config = _interopRequireDefault(__webpack_require__(3));
+var _element = _interopRequireDefault(__webpack_require__(12));
 
 var data = /*#__PURE__*/function () {
   (0, _createClass2["default"])(data, null, [{
@@ -261,18 +180,29 @@ var data = /*#__PURE__*/function () {
 
   function data() {
     (0, _classCallCheck2["default"])(this, data);
+    // 发送打点信息时传递的基础参数
+    this._baseData = {};
   }
 
   (0, _createClass2["default"])(data, [{
+    key: "setBaseData",
+    value: function setBaseData(params) {
+      var type = (0, _typeof2["default"])(params);
+
+      if (type !== 'function' && type !== 'object') {
+        console.error('参数类型错误，应该对象或方法。');
+      }
+
+      this._baseData = params;
+    }
+  }, {
     key: "getBaseData",
     value: function getBaseData() {
-      return {
-        case_key: _config["default"].getProjectId(),
-        biz_plat: 'term',
-        log_name: 'custom_event',
-        log_src: 'client',
-        time_str: this.getCurrentTime()
-      };
+      if (typeof this._baseData === 'function') {
+        return this._baseData();
+      }
+
+      return this._baseData;
     }
   }, {
     key: "getCurrentTime",
@@ -388,6 +318,77 @@ var _default = data.Instance;
 exports["default"] = _default;
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+/**
+ * @author: liuyang9
+ * @description: 配置相关参数
+ */
+var config = /*#__PURE__*/function () {
+  (0, _createClass2["default"])(config, null, [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new config();
+      }
+
+      return this._instance;
+    }
+  }]);
+
+  function config() {
+    (0, _classCallCheck2["default"])(this, config);
+    // 服务端接收数据的url
+    this._serviceUrl = null; // 项目的标识
+
+    this._projectId = null; // 即data-key里的key
+
+    this._dataKey = 'wk';
+  }
+
+  (0, _createClass2["default"])(config, [{
+    key: "getServiceUrl",
+    value: function getServiceUrl() {
+      return this._serviceUrl;
+    }
+  }, {
+    key: "setServiceUrl",
+    value: function setServiceUrl(url) {
+      this._serviceUrl = url;
+    }
+  }, {
+    key: "setDataKey",
+    value: function setDataKey(id) {
+      this._dataKey = id;
+    }
+  }, {
+    key: "getDataKey",
+    value: function getDataKey() {
+      return this._dataKey;
+    }
+  }]);
+  return config;
+}();
+
+var _default = config.Instance;
+exports["default"] = _default;
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -481,6 +482,8 @@ exports["default"] = void 0;
 
 var _monitor = _interopRequireDefault(__webpack_require__(9));
 
+var _data = _interopRequireDefault(__webpack_require__(3));
+
 /**
  * @author: liuyang9
  * @description: monitor的api
@@ -495,7 +498,9 @@ var _default = {
   // 监听单击事件的数据采集
   getClickAndKeydown: _monitor["default"].getClickAndKeydown,
   // 发送打点信息
-  send: _monitor["default"].send
+  send: _monitor["default"].send,
+  setBaseLogParams: _monitor["default"].setBaseLogParams,
+  getCurrentTime: _data["default"].getCurrentTime
 };
 exports["default"] = _default;
 
@@ -517,13 +522,13 @@ var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _data = _interopRequireDefault(__webpack_require__(4));
+var _data = _interopRequireDefault(__webpack_require__(3));
 
 var _nodeH = _interopRequireDefault(__webpack_require__(5));
 
-var _config = _interopRequireDefault(__webpack_require__(3));
+var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _log = _interopRequireDefault(__webpack_require__(13));
+var _log = _interopRequireDefault(__webpack_require__(14));
 
 /**
  * @author: liuyang9
@@ -586,6 +591,15 @@ var Monitor = /*#__PURE__*/function () {
     key: "send",
     value: function send(params) {
       _log["default"].send(params);
+
+      return this;
+    }
+  }, {
+    key: "setBaseLogParams",
+    value: function setBaseLogParams(params) {
+      _data["default"].setBaseData(params);
+
+      return this;
     }
   }, {
     key: "version",
@@ -601,6 +615,28 @@ exports["default"] = _default;
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -649,7 +685,7 @@ var eventH = /*#__PURE__*/function () {
 exports["default"] = eventH;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -662,9 +698,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _config = _interopRequireDefault(__webpack_require__(3));
+var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _stringH = _interopRequireDefault(__webpack_require__(12));
+var _stringH = _interopRequireDefault(__webpack_require__(13));
 
 function getContainerId(el) {
   var areaStr;
@@ -723,7 +759,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -757,7 +793,7 @@ var stringH = /*#__PURE__*/function () {
 exports["default"] = stringH;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -770,17 +806,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _extends2 = _interopRequireDefault(__webpack_require__(14));
+var _extends2 = _interopRequireDefault(__webpack_require__(15));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _objectH = _interopRequireDefault(__webpack_require__(15));
+var _data = _interopRequireDefault(__webpack_require__(3));
 
-var _data = _interopRequireDefault(__webpack_require__(4));
+var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _config = _interopRequireDefault(__webpack_require__(3));
+var _paramsHelper = _interopRequireDefault(__webpack_require__(16));
 
 /**
  * @author: liuyang9
@@ -821,7 +857,7 @@ var log = /*#__PURE__*/function () {
     value: function generateUrl(params) {
       var serviceUrl = _config["default"].getServiceUrl();
 
-      var encodeParams = _objectH["default"].encodeURIJson(params); // 加上时间戳，防止缓存
+      var encodeParams = _paramsHelper["default"].encodeParams(params); // 加上时间戳，防止缓存
 
 
       encodeParams += '&t=' + +new Date();
@@ -845,7 +881,7 @@ var log = /*#__PURE__*/function () {
 
       var serviceUrl = _config["default"].getServiceUrl();
 
-      var logParams = _objectH["default"].encodeURIJson(params);
+      var logParams = _paramsHelper["default"].encodeParams(params);
 
       if (!serviceUrl) {
         alert('Error : the service url does not exist!');
@@ -863,7 +899,6 @@ var log = /*#__PURE__*/function () {
       this.lastLogParams = logParams; //100ms后允许发相同数据
 
       setTimeout(function () {
-        console.log('this..lastLogParams.', _this.lastLogParams);
         _this.lastLogParams = '';
       }, 100);
       return true;
@@ -891,7 +926,7 @@ var _default = log.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -915,7 +950,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -928,58 +963,24 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(16));
-
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var objectH = /*#__PURE__*/function () {
-  function objectH() {
-    (0, _classCallCheck2["default"])(this, objectH);
+var paramsHelper = /*#__PURE__*/function () {
+  function paramsHelper() {
+    (0, _classCallCheck2["default"])(this, paramsHelper);
   }
 
-  (0, _createClass2["default"])(objectH, null, [{
-    key: "getConstructorName",
-    value: function getConstructorName(o) {
-      //加o.constructor是因为IE下的window和document
-      if (o != null && o.constructor != null) {
-        return Object.prototype.toString.call(o).slice(8, -1);
-      } else {
-        return '';
-      }
-    }
-    /**
-     * 判断一个变量是否Array对象
-     * @param  {Object}  obj 目标变量
-     * @return {Boolean}
-     */
+  (0, _createClass2["default"])(paramsHelper, [{
+    key: "encodeParams",
 
-  }, {
-    key: "isArray",
-    value: function isArray(obj) {
-      return this.getConstructorName(obj) == 'Array';
-    }
-    /**
-     * 判断一个变量是否typeof object
-     * @param  {Object}  obj 目标变量
-     * @return {Boolean}
-     */
-
-  }, {
-    key: "isObject",
-    value: function isObject(obj) {
-      return obj !== null && (0, _typeof2["default"])(obj) == 'object';
-    }
     /**
      * 将Object序列化为key=val键值对字符串，不处理val为数组的情况]
      * @param  {Object} json 需要序列化的对象
      * @return {String}      序列化后的字符串
      */
-
-  }, {
-    key: "encodeURIJson",
-    value: function encodeURIJson(obj) {
+    value: function encodeParams(obj) {
       var result = [];
 
       for (var key in obj) {
@@ -992,33 +993,21 @@ var objectH = /*#__PURE__*/function () {
 
       return result.join('&');
     }
+  }], [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new paramsHelper();
+      }
+
+      return this._instance;
+    }
   }]);
-  return objectH;
+  return paramsHelper;
 }();
 
-exports["default"] = objectH;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
+var _default = paramsHelper.Instance;
+exports["default"] = _default;
 
 /***/ })
 /******/ ])["default"];
