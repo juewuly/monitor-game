@@ -18,8 +18,16 @@
   <script>
     console.log('enter...');
     MonitorGame
-    .setProjectId('testProject')
     .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
+    .setBaseLogParams(function() {
+      return {
+        case_key: 'testProject',
+        biz_plat: 'term',
+        log_name: 'custom_event',
+        log_src: 'client',
+        time_str: MonitorGame.getCurrentTime()
+      }
+    })
     .getClickAndKeydown()
     .send({event_key: 'test'});
   </script>

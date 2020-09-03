@@ -1,7 +1,6 @@
 import EventH from './util/eventH';
 import NodeH from './util/nodeH';
 import elementHelper from './util/element';
-import config from './config';
 
 class data {
   static get Instance() {
@@ -13,16 +12,25 @@ class data {
   }
 
   constructor() {
+    // 发送打点信息时传递的基础参数
+    this._baseData = {};
+  }
+
+  setBaseData(params) {
+    const type = typeof params;
+    if (type !== 'function' && type !== 'object') {
+      console.error('参数类型错误，应该对象或方法。');
+    }
+
+    this._baseData = params;
   }
 
   getBaseData() {
-    return {
-      case_key: config.getProjectId(),
-      biz_plat: 'term',
-      log_name: 'custom_event',
-      log_src: 'client',
-      time_str: this.getCurrentTime(),
-    };
+    if (typeof this._baseData === 'function') {
+      return this._baseData();
+    }
+
+    return this._baseData;
   }
 
   getCurrentTime() {

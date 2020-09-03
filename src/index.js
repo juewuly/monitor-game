@@ -4,6 +4,7 @@
  */
 
 import monitor from './monitor';
+import data from './data';
 
 export default {
   // 获取版本号
@@ -15,5 +16,7 @@ export default {
   // 监听单击事件的数据采集
   getClickAndKeydown: monitor.getClickAndKeydown,
   // 发送打点信息
-  send: monitor.send
+  send: monitor.send,
+  setBaseLogParams: monitor.setBaseLogParams,
+  getCurrentTime: data.getCurrentTime
 }

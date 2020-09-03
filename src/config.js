@@ -29,14 +29,6 @@ class config {
     this._serviceUrl = url;
   }
 
-  setProjectId(id) {
-    this._projectId = id;
-  }
-
-  getProjectId() {
-    return this._projectId;
-  }
-
   setDataKey(id) {
     this._dataKey = id;
   }

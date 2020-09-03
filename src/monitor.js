@@ -57,6 +57,12 @@ class Monitor {
   // 开放单独发送打点信息
   send(params) {
     log.send(params);
+    return this;
+  }
+
+  setBaseLogParams(params) {
+    data.setBaseData(params);
+    return this;
   }
 }
 
