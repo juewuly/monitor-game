@@ -25,14 +25,6 @@ class Monitor {
     return 'v1.0.0';
   }
 
-  // 设置项目标识
-  setProjectId(id) {
-    if (id) {
-      config.setProjectId(id);
-    }
-    return this;
-  }
-
   // 设置数据发送到的url
   setServiceUrl(url) {
     config.setServiceUrl(url);
@@ -60,7 +52,12 @@ class Monitor {
     return this;
   }
 
-  setBaseLogParams(params) {
+  
+  /**
+   * 设置发送打点时附加的参数
+   * @param {Object || Function} params 
+   */
+  setBaseLogData(params) {
     data.setBaseData(params);
     return this;
   }
