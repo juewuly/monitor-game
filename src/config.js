@@ -15,10 +15,10 @@ class config {
   constructor() {
     // 服务端接收数据的url
     this._serviceUrl = null;
-    // 项目的标识
-    this._projectId = null;
-    // 即data-key里的key
-    this._dataKey = 'wk';
+    // 打点指标在html标签中的属性名称
+    this._metricAttributeName = 'data-wk';
+    // 设置打点指标的参数名
+    this._metricParamName = 'metric';
   }
   
   getServiceUrl() {
@@ -29,12 +29,20 @@ class config {
     this._serviceUrl = url;
   }
 
-  setDataKey(id) {
-    this._dataKey = id;
+  setMetricAttributeName(name) {
+    this._metricAttributeName = name;
   }
 
-  getDataKey() {
-    return this._dataKey;
+  getMetricAttributeName() {
+    return this._metricAttributeName;
+  }
+
+  setMetricParamName(name) {
+    this._metricParamName = name;
+  }
+
+  getMetricParamName() {
+    return this._metricParamName;
   }
 }
 

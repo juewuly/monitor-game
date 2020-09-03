@@ -16,5 +16,7 @@ export default {
   // 发送打点信息
   send: monitor.send,
   setBaseLogData: monitor.setBaseLogData,
-  getCurrentTime: data.getCurrentTime
+  getCurrentTime: data.getCurrentTime,
+  setMetricAttributeName: monitor.setMetricAttributeName,
+  setMetricParamName: monitor.setMetricParamName
 }

@@ -15,12 +15,12 @@ class elementHelper {
   }
 
   getMetricData(element) {
-    const dataKey = config.getDataKey();
+    const attributeName = config.getMetricAttributeName();
     let result = '';
 
     while (element) {
-      if (element.attributes && (dataKey in element.attributes || `data-${dataKey}` in element.attributes)) {
-        result = element.getAttribute(dataKey) || element.getAttribute(`data-${dataKey}`);
+      if (element.attributes && (attributeName in element.attributes || `data-${attributeName}` in element.attributes)) {
+        result = element.getAttribute(attributeName) || element.getAttribute(`data-${attributeName}`);
         return result.substr(0, this._maxLength);
       }
 

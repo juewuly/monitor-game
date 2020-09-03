@@ -34,6 +34,7 @@
         time_str: MonitorGame.getCurrentTime()
       }
     })
+    .setMetricParamName('event_key')
     .getClickAndKeydown()
     .send({event_key: 'test'});
   </script>

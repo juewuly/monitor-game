@@ -37,14 +37,14 @@ class Monitor {
     nodeHelper.on(document, 'mousedown', function(e) {
       let metricData = data.getClickData(e);
       if (metricData) {
-        log.send({ event_key: metricData });
+        log.send({ [config.getMetricParamName()]: metricData });
       }
     });
 
     nodeHelper.on(document, 'keydown', function(e) {
       let metricData = data.getKeydownData(e);
       if (metricData) {
-        log.send({ event_key: metricData });
+        log.send({ [config.getMetricParamName()]: metricData });
       }
     });
 
@@ -63,6 +63,16 @@ class Monitor {
    */
   setBaseLogData(params) {
     data.setBaseData(params);
+    return this;
+  }
+
+  setMetricAttributeName(name) {
+    config.setMetricAttributeName(name);
+    return this;
+  }
+
+  setMetricParamName(name) {
+    config.setMetricParamName(name);
     return this;
   }
 }
