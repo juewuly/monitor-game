@@ -69,7 +69,6 @@ class log {
     this.lastLogParams = logParams
     //100ms后允许发相同数据
     setTimeout(() => {
-      console.log('this..lastLogParams.', this.lastLogParams);
       this.lastLogParams = '';
     }, 100);
 
@@ -77,8 +76,8 @@ class log {
   }
 
   sendLog(url) {
-    let id = 'log_' + (+new Date);
-    let img = window['__monitor_game_imgs'][id] = new Image();
+    const id = 'log_' + (+new Date);
+    const img = window['__monitor_game_imgs'][id] = new Image();
 
     img.onload = img.onerror = function() {
       if(window.__monitor_game_imgs && window['__monitor_game_imgs'][id]) {
