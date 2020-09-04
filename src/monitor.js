@@ -58,7 +58,7 @@ class Monitor {
   }
 
   /**
-   * 设置发送打点时附加的参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
+   * 设置发送打点时的基础参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
    * @param {Object || Function} params 
    */
   setBaseLogData(params) {
