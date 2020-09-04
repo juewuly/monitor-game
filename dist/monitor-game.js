@@ -382,7 +382,7 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 
 /**
  * @author: liuyang9
- * @description: monitor的api
+ * @description: 打点sdk的api
  */
 var _default = {
   // 获取版本号
@@ -393,9 +393,13 @@ var _default = {
   getClickAndKeydown: _monitor["default"].getClickAndKeydown,
   // 发送打点信息
   send: _monitor["default"].send,
+  // 设置发送打点时的基础参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
   setBaseLogData: _monitor["default"].setBaseLogData,
+  // 获取当前时间
   getCurrentTime: _data["default"].getCurrentTime,
+  // 设置打点指标在html标签中的属性名
   setMetricAttributeName: _monitor["default"].setMetricAttributeName,
+  // 设置打点指标在发送给服务端时的参数名
   setMetricParamName: _monitor["default"].setMetricParamName
 };
 exports["default"] = _default;
@@ -430,7 +434,7 @@ var _nodeHelper = _interopRequireDefault(__webpack_require__(16));
 
 /**
  * @author: liuyang9
- * @description: 新版打点
+ * @description: 打点sdk
  */
 var Monitor = /*#__PURE__*/function () {
   (0, _createClass2["default"])(Monitor, null, [{
@@ -487,7 +491,7 @@ var Monitor = /*#__PURE__*/function () {
       return this;
     }
     /**
-     * 设置发送打点时附加的参数
+     * 设置发送打点时的基础参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
      * @param {Object || Function} params 
      */
 
@@ -497,14 +501,16 @@ var Monitor = /*#__PURE__*/function () {
       _data["default"].setBaseData(params);
 
       return this;
-    }
+    } // 设置打点指标在html标签中的属性名
+
   }, {
     key: "setMetricAttributeName",
     value: function setMetricAttributeName(name) {
       _config["default"].setMetricAttributeName(name);
 
       return this;
-    }
+    } // 设置打点指标在发送给服务端时的参数名
+
   }, {
     key: "setMetricParamName",
     value: function setMetricParamName(name) {
