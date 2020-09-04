@@ -1,6 +1,6 @@
 /**
  * @author: liuyang9
- * @description: 新版打点
+ * @description: 打点sdk
  */
 
 import data from './data';

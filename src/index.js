@@ -1,6 +1,6 @@
 /**
  * @author: liuyang9
- * @description: monitor的api
+ * @description: 打点sdk的api
  */
 
 import monitor from './monitor';
