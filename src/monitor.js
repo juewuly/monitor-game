@@ -58,7 +58,7 @@ class Monitor {
   }
 
   /**
-   * 设置发送打点时附加的参数
+   * 设置发送打点时附加的参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
    * @param {Object || Function} params 
    */
   setBaseLogData(params) {
@@ -66,11 +66,13 @@ class Monitor {
     return this;
   }
 
+  // 设置打点指标在html标签中的属性名
   setMetricAttributeName(name) {
     config.setMetricAttributeName(name);
     return this;
   }
 
+  // 设置打点指标在发送给服务端时的参数名
   setMetricParamName(name) {
     config.setMetricParamName(name);
     return this;
