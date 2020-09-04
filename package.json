@@ -9,7 +9,14 @@
     "dev": "webpack-dev-server --config webpack.dev.js",
     "prepublish": "npm run build"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:juewuly/monitor-game.git"
+  },
+  "keywords": [
+    "monitor",
+    "metric"
+  ],
   "author": "liuyang9",
   "license": "ISC",
   "devDependencies": {
