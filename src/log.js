@@ -4,7 +4,8 @@
  */
 
 import data from './data';
-import config from './config';
+import config from './config/config';
+import urlConfig from './config/urlConfig';
 import paramsHelper from './util/paramsHelper';
 
 class log {
@@ -21,19 +22,19 @@ class log {
     window.__monitor_game_imgs = {};
   }
 
-  send(params) {
-    if (!this.validateParams(params)) {
+  send(params, type) {
+    if (!this.validateParams(params, type)) {
       return;
     }
 
     const extendedParams = this.extendParams(params);
-    const url = this.generateUrl(extendedParams);
+    const url = this.generateUrl(extendedParams, type);
     this.sendLog(url);
   }
 
   // 根据打点参数信息
-  generateUrl(params) {
-    const serviceUrl = config.getServiceUrl();
+  generateUrl(params, type) {
+    const serviceUrl = urlConfig.getUrl(type)
     let encodeParams = paramsHelper.encodeParams(params);
     // 加上时间戳，防止缓存
     encodeParams += '&t=' + (+ new Date());
@@ -49,8 +50,8 @@ class log {
   }
 
   // 验证参数的有效性
-  validateParams(params) {
-    const serviceUrl = config.getServiceUrl();
+  validateParams(params, type) {
+    const serviceUrl = urlConfig.getUrl(type);
     const logParams = paramsHelper.encodeParams(params);
 
     if (!serviceUrl) {

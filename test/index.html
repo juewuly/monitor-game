@@ -24,7 +24,10 @@
   <script>
     console.log('enter...');
     MonitorGame
-    .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
+    // .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
+    .configUrl({
+      click: 'https://dd.mgame.360.cn/t/game/common'
+    })
     .setBaseLogData(function() {
       return {
         case_key: 'testProject',

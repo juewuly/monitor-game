@@ -10,9 +10,6 @@ export default {
   // 获取版本号
   version: monitor.version,
 
-  // 设置服务端url
-  setServiceUrl: monitor.setServiceUrl,
-
   // 监听单击事件的数据采集
   getClickAndKeydown: monitor.getClickAndKeydown,
 
@@ -29,5 +26,12 @@ export default {
   setMetricAttributeName: monitor.setMetricAttributeName,
 
   // 设置打点指标在发送给服务端时的参数名
-  setMetricParamName: monitor.setMetricParamName
+  setMetricParamName: monitor.setMetricParamName,
+
+  // pv、uv
+  track: monitor.track,
+
+  // 配置url
+  configUrl: monitor.configUrl
+
 }

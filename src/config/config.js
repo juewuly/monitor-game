@@ -13,22 +13,12 @@ class config {
   }
 
   constructor() {
-    // 服务端接收数据的url
-    this._serviceUrl = null;
     // 打点指标在html标签中的属性名称
     this._metricAttributeName = 'data-wk';
     // 设置打点指标的参数名
     this._metricParamName = 'metric';
   }
   
-  getServiceUrl() {
-    return this._serviceUrl;
-  }
-
-  setServiceUrl(url) {
-    this._serviceUrl = url;
-  }
-
   setMetricAttributeName(name) {
     this._metricAttributeName = name;
   }

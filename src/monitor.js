@@ -4,7 +4,8 @@
  */
 
 import data from './data';
-import config from './config';
+import config from './config/config';
+import urlConfig from './config/urlConfig';
 import log from './log';
 import nodeHelper from './util/nodeHelper';
 
@@ -37,14 +38,14 @@ class Monitor {
     nodeHelper.on(document, 'mousedown', function(e) {
       let metricData = data.getClickData(e);
       if (metricData) {
-        log.send({ [config.getMetricParamName()]: metricData });
+        log.send({ [config.getMetricParamName()]: metricData }, 'click');
       }
     });
 
     nodeHelper.on(document, 'keydown', function(e) {
       let metricData = data.getKeydownData(e);
       if (metricData) {
-        log.send({ [config.getMetricParamName()]: metricData });
+        log.send({ [config.getMetricParamName()]: metricData }, 'click');
       }
     });
 
@@ -52,9 +53,15 @@ class Monitor {
   }
 
   // 开放单独发送打点信息
-  send(params) {
-    log.send(params);
+  send(params, type='click') {
+    log.send(params, type);
     return this;
+  }
+
+  // 
+  track() {
+    const metricParamName = config.getMetricParamName();
+    log.send();
   }
 
   /**
@@ -75,6 +82,12 @@ class Monitor {
   // 设置打点指标在发送给服务端时的参数名
   setMetricParamName(name) {
     config.setMetricParamName(name);
+    return this;
+  }
+
+  // 配置url
+  configUrl(urlObj) {
+    urlConfig.configUrl(urlObj);
     return this;
   }
 }
