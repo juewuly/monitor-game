@@ -1,5 +1,4 @@
-const urlType = ['click', 'clickHeatMap'];
-const urlTypeReg = new RegExp(`^(${urlType.join('|')})$`);
+import urlType from './urlType';
 
 class urlConfig {
   static get Instance() {
@@ -15,10 +14,10 @@ class urlConfig {
   }
 
   getUrl(type) {
-    if (!urlTypeReg.test(type)) {
+    if (!urlType[type]) {
       return false;
     }
-    
+
     return this._urlObj[type];
   }
 

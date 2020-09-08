@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -154,15 +154,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _typeof2 = _interopRequireDefault(__webpack_require__(10));
+var _typeof2 = _interopRequireDefault(__webpack_require__(12));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
 var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
-var _eventHelper = _interopRequireDefault(__webpack_require__(11));
+var _eventHelper = _interopRequireDefault(__webpack_require__(13));
 
-var _elementHelper = _interopRequireDefault(__webpack_require__(12));
+var _elementHelper = _interopRequireDefault(__webpack_require__(14));
 
 var data = /*#__PURE__*/function () {
   (0, _createClass2["default"])(data, null, [{
@@ -275,25 +275,13 @@ var config = /*#__PURE__*/function () {
 
   function config() {
     (0, _classCallCheck2["default"])(this, config);
-    // 服务端接收数据的url
-    this._serviceUrl = null; // 打点指标在html标签中的属性名称
-
+    // 打点指标在html标签中的属性名称
     this._metricAttributeName = 'data-wk'; // 设置打点指标的参数名
 
     this._metricParamName = 'metric';
   }
 
   (0, _createClass2["default"])(config, [{
-    key: "getServiceUrl",
-    value: function getServiceUrl() {
-      return this._serviceUrl;
-    }
-  }, {
-    key: "setServiceUrl",
-    value: function setServiceUrl(url) {
-      this._serviceUrl = url;
-    }
-  }, {
     key: "setMetricAttributeName",
     value: function setMetricAttributeName(name) {
       this._metricAttributeName = name;
@@ -324,12 +312,122 @@ exports["default"] = _default;
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(6);
-module.exports = __webpack_require__(7);
+"use strict";
 
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+var _urlType = _interopRequireDefault(__webpack_require__(6));
+
+var urlConfig = /*#__PURE__*/function () {
+  (0, _createClass2["default"])(urlConfig, null, [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new urlConfig();
+      }
+
+      return this._instance;
+    }
+  }]);
+
+  function urlConfig() {
+    (0, _classCallCheck2["default"])(this, urlConfig);
+    this._urlObj = {};
+  }
+
+  (0, _createClass2["default"])(urlConfig, [{
+    key: "getUrl",
+    value: function getUrl(type) {
+      if (!_urlType["default"][type]) {
+        return false;
+      }
+
+      return this._urlObj[type];
+    }
+  }, {
+    key: "configUrl",
+    value: function configUrl(urlObj) {
+      this._urlObj = urlObj;
+    }
+  }]);
+  return urlConfig;
+}();
+
+var _default = urlConfig.Instance;
+exports["default"] = _default;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
+
+var _createClass2 = _interopRequireDefault(__webpack_require__(2));
+
+/**
+ * 配置的url类型
+ */
+var urlType = /*#__PURE__*/function () {
+  function urlType() {
+    (0, _classCallCheck2["default"])(this, urlType);
+  }
+
+  (0, _createClass2["default"])(urlType, [{
+    key: "click",
+    get: function get() {
+      return 'click';
+    }
+  }, {
+    key: "clickHeatMap",
+    get: function get() {
+      return 'clickHeatMap';
+    }
+  }], [{
+    key: "Instance",
+    get: function get() {
+      if (!this._instance) {
+        this._instance = new urlType();
+      }
+
+      return this._instance;
+    }
+  }]);
+  return urlType;
+}();
+
+var _default = urlType.Instance;
+exports["default"] = _default;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(8);
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 var origDefineProperty = Object.defineProperty;
@@ -363,7 +461,7 @@ if (!supportsDescriptors) {
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -376,7 +474,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _monitor = _interopRequireDefault(__webpack_require__(8));
+var _monitor = _interopRequireDefault(__webpack_require__(10));
 
 var _data = _interopRequireDefault(__webpack_require__(3));
 
@@ -387,10 +485,10 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 var _default = {
   // 获取版本号
   version: _monitor["default"].version,
-  // 设置服务端url
-  setServiceUrl: _monitor["default"].setServiceUrl,
   // 监听单击事件的数据采集
   getClickAndKeydown: _monitor["default"].getClickAndKeydown,
+  // 热力图的数据采集
+  getClickHeatmap: _monitor["default"].getClickHeatmap,
   // 发送打点信息
   send: _monitor["default"].send,
   // 设置发送打点时的基础参数(可为对象或函数，如果为函数，则附加参数为函数的返回值)
@@ -400,12 +498,14 @@ var _default = {
   // 设置打点指标在html标签中的属性名
   setMetricAttributeName: _monitor["default"].setMetricAttributeName,
   // 设置打点指标在发送给服务端时的参数名
-  setMetricParamName: _monitor["default"].setMetricParamName
+  setMetricParamName: _monitor["default"].setMetricParamName,
+  // 配置url
+  configUrl: _monitor["default"].configUrl
 };
 exports["default"] = _default;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -418,7 +518,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(9));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(11));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -428,9 +528,13 @@ var _data = _interopRequireDefault(__webpack_require__(3));
 
 var _config = _interopRequireDefault(__webpack_require__(4));
 
-var _log = _interopRequireDefault(__webpack_require__(13));
+var _urlConfig = _interopRequireDefault(__webpack_require__(5));
 
-var _nodeHelper = _interopRequireDefault(__webpack_require__(16));
+var _urlType = _interopRequireDefault(__webpack_require__(6));
+
+var _log = _interopRequireDefault(__webpack_require__(15));
+
+var _nodeHelper = _interopRequireDefault(__webpack_require__(18));
 
 /**
  * @author: liuyang9
@@ -453,22 +557,14 @@ var Monitor = /*#__PURE__*/function () {
   }
 
   (0, _createClass2["default"])(Monitor, [{
-    key: "setServiceUrl",
-    // 设置数据发送到的url
-    value: function setServiceUrl(url) {
-      _config["default"].setServiceUrl(url);
-
-      return this;
-    } // 收集点击时的数据
-
-  }, {
     key: "getClickAndKeydown",
+    // 收集点击时的数据
     value: function getClickAndKeydown() {
       _nodeHelper["default"].on(document, 'mousedown', function (e) {
         var metricData = _data["default"].getClickData(e);
 
         if (metricData) {
-          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData));
+          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData), _urlType["default"].click);
         }
       });
 
@@ -476,8 +572,43 @@ var Monitor = /*#__PURE__*/function () {
         var metricData = _data["default"].getKeydownData(e);
 
         if (metricData) {
-          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData));
+          _log["default"].send((0, _defineProperty2["default"])({}, _config["default"].getMetricParamName(), metricData), _urlType["default"].click);
         }
+      });
+
+      return this;
+    } // 热力图打点
+
+  }, {
+    key: "getClickHeatmap",
+    value: function getClickHeatmap() {
+      var times = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 2;
+      var minutes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 5;
+      var positions = [];
+      var logTimer = 0;
+
+      var detectSend = function detectSend(ifForceSend) {
+        clearTimeout(logTimer);
+
+        if (ifForceSend || positions.length > times) {
+          _log["default"].send({
+            positions: positions.join(','),
+            screenSize: "".concat(screen.width, "x").concat(screen.height)
+          }, _urlType["default"].clickHeatMap);
+
+          positions = [];
+          return;
+        }
+
+        logTimer = setTimeout(function () {
+          detectSend(true);
+        }, minutes * 60 * 1000);
+      };
+
+      _nodeHelper["default"].on(document, 'mousedown', function (e) {
+        var pos = e.pageX + '.' + e.pageY;
+        positions.push(pos);
+        detectSend();
       });
 
       return this;
@@ -486,7 +617,9 @@ var Monitor = /*#__PURE__*/function () {
   }, {
     key: "send",
     value: function send(params) {
-      _log["default"].send(params);
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _urlType["default"].click;
+
+      _log["default"].send(params, type);
 
       return this;
     }
@@ -517,6 +650,14 @@ var Monitor = /*#__PURE__*/function () {
       _config["default"].setMetricParamName(name);
 
       return this;
+    } // 配置url
+
+  }, {
+    key: "configUrl",
+    value: function configUrl(urlObj) {
+      _urlConfig["default"].configUrl(urlObj);
+
+      return this;
     }
   }, {
     key: "version",
@@ -531,7 +672,7 @@ var _default = Monitor.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -552,7 +693,7 @@ function _defineProperty(obj, key, value) {
 module.exports = _defineProperty;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -574,7 +715,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -629,7 +770,7 @@ var _default = eventHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -692,7 +833,7 @@ var _default = elementHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -705,7 +846,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _extends2 = _interopRequireDefault(__webpack_require__(14));
+var _extends2 = _interopRequireDefault(__webpack_require__(16));
 
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(1));
 
@@ -713,9 +854,9 @@ var _createClass2 = _interopRequireDefault(__webpack_require__(2));
 
 var _data = _interopRequireDefault(__webpack_require__(3));
 
-var _config = _interopRequireDefault(__webpack_require__(4));
+var _urlConfig = _interopRequireDefault(__webpack_require__(5));
 
-var _paramsHelper = _interopRequireDefault(__webpack_require__(15));
+var _paramsHelper = _interopRequireDefault(__webpack_require__(17));
 
 /**
  * @author: liuyang9
@@ -741,27 +882,27 @@ var log = /*#__PURE__*/function () {
 
   (0, _createClass2["default"])(log, [{
     key: "send",
-    value: function send(params) {
-      if (!this.validateParams(params)) {
+    value: function send(params, type) {
+      if (!this.validateParams(params, type)) {
         return;
       }
 
       var extendedParams = this.extendParams(params);
-      var url = this.generateUrl(extendedParams);
+      var url = this.generateUrl(extendedParams, type);
       this.sendLog(url);
     } // 根据打点参数信息
 
   }, {
     key: "generateUrl",
-    value: function generateUrl(params) {
-      var serviceUrl = _config["default"].getServiceUrl();
+    value: function generateUrl(params, type) {
+      var apiUrl = _urlConfig["default"].getUrl(type);
 
       var encodeParams = _paramsHelper["default"].encodeParams(params); // 加上时间戳，防止缓存
 
 
       encodeParams += '&t=' + +new Date();
-      var linkChart = serviceUrl.indexOf('?') > -1 ? '&' : '?';
-      var url = "".concat(serviceUrl).concat(linkChart).concat(encodeParams);
+      var linkChart = apiUrl.indexOf('?') > -1 ? '&' : '?';
+      var url = "".concat(apiUrl).concat(linkChart).concat(encodeParams);
       return url;
     } // 扩展参数
 
@@ -775,15 +916,15 @@ var log = /*#__PURE__*/function () {
 
   }, {
     key: "validateParams",
-    value: function validateParams(params) {
+    value: function validateParams(params, type) {
       var _this = this;
 
-      var serviceUrl = _config["default"].getServiceUrl();
+      var apiUrl = _urlConfig["default"].getUrl(type);
 
       var logParams = _paramsHelper["default"].encodeParams(params);
 
-      if (!serviceUrl) {
-        console.error('服务url未配置！');
+      if (!apiUrl) {
+        console.error("".concat(type, "\u7684api url\u672A\u914D\u7F6E\uFF01"));
         return false;
       }
 
@@ -826,7 +967,7 @@ var _default = log.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _extends() {
@@ -850,7 +991,7 @@ function _extends() {
 module.exports = _extends;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -910,7 +1051,7 @@ var _default = paramsHelper.Instance;
 exports["default"] = _default;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

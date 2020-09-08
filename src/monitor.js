@@ -6,6 +6,7 @@
 import data from './data';
 import config from './config/config';
 import urlConfig from './config/urlConfig';
+import urlType from './config/urlType';
 import log from './log';
 import nodeHelper from './util/nodeHelper';
 
@@ -32,14 +33,14 @@ class Monitor {
     nodeHelper.on(document, 'mousedown', function(e) {
       let metricData = data.getClickData(e);
       if (metricData) {
-        log.send({ [config.getMetricParamName()]: metricData }, 'click');
+        log.send({ [config.getMetricParamName()]: metricData }, urlType.click);
       }
     });
 
     nodeHelper.on(document, 'keydown', function(e) {
       let metricData = data.getKeydownData(e);
       if (metricData) {
-        log.send({ [config.getMetricParamName()]: metricData }, 'click');
+        log.send({ [config.getMetricParamName()]: metricData }, urlType.click);
       }
     });
 
@@ -53,22 +54,21 @@ class Monitor {
     
     const detectSend = ifForceSend => {
       clearTimeout(logTimer);
-      if (ifForceSend || positions.length > times){
+      if (ifForceSend || positions.length > times) {
         log.send({
           positions: positions.join(','),
           screenSize: `${screen.width}x${screen.height}`
-        }, 'clickHeatMap');
+        }, urlType.clickHeatMap);
         positions = [];
         return;
       }
 
-      logTimer = setTimeout(function(){
+      logTimer = setTimeout(function() {
         detectSend(true);
       }, minutes * 60 * 1000);
     }
 
     nodeHelper.on(document, 'mousedown', function(e) {
-      console.log('热力。。。。');
       const pos = e.pageX + '.' + e.pageY;
       positions.push(pos);
       detectSend();
@@ -77,7 +77,7 @@ class Monitor {
   }
 
   // 开放单独发送打点信息
-  send(params, type='click') {
+  send(params, type=urlType.click) {
     log.send(params, type);
     return this;
   }
