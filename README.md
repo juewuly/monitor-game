@@ -23,7 +23,7 @@ $ npm i monitor-game --save
 
 ## Usage
 1. sdk在全局下的变量名是`MonitorGame`。
-2. 设置打点信息发送到的服务地址`setServiceUrl('apiUrl')`。
+2. 设置打点信息发送到的服务地址`configUrl(object)`。
 3. 设置打点时传送的基础参数数据`setBaseLogData(Function | Object)`,参数值可为对象或函数，如果为函数，则基础参数为函数的返回值`。
 4. 设置打点指标在html标签中的属性名`setMetricAttributeName('data-wk') // 可选，不设置时默认值为'data-wk'`。
 5. 设置打点指标在发送给服务端时的参数名`setMetricParamName('event_key') // 可选，默认值为'metric'`。
@@ -50,7 +50,10 @@ $ npm i monitor-game --save
 
 **设置打点发送到的服务端url**
 ```javascript
-  MonitorGame.setServiceUrl('apiUrl');
+  MonitorGame.configUrl({
+    click: 'clickUrl',
+    clickHeatMap: 'clickHeatMapUrl'
+  });
 ```
 
 **设置发送打点信息时传递给服务端的基础参数**
@@ -91,6 +94,12 @@ $ npm i monitor-game --save
 ```javascript
   MonitorGame.getClickAndKeydown();
 ```
+
+**热力图打点**
+```javascript
+  MonitorGame.getClickHeatmap();
+```
+
 **手动发送打点（可选）**
 ```javascript
   MonitorGame.send({event_key: 'test'});
