@@ -4,7 +4,6 @@
  */
 
 import data from './data';
-import config from './config/config';
 import urlConfig from './config/urlConfig';
 import paramsHelper from './util/paramsHelper';
 
@@ -34,12 +33,12 @@ class log {
 
   // 根据打点参数信息
   generateUrl(params, type) {
-    const serviceUrl = urlConfig.getUrl(type)
+    const apiUrl = urlConfig.getUrl(type)
     let encodeParams = paramsHelper.encodeParams(params);
     // 加上时间戳，防止缓存
     encodeParams += '&t=' + (+ new Date());
-    const linkChart = serviceUrl.indexOf('?') > -1 ? '&' : '?';
-    const url = `${serviceUrl}${linkChart}${encodeParams}`;
+    const linkChart = apiUrl.indexOf('?') > -1 ? '&' : '?';
+    const url = `${apiUrl}${linkChart}${encodeParams}`;
     return url;
   }
 
@@ -51,10 +50,10 @@ class log {
 
   // 验证参数的有效性
   validateParams(params, type) {
-    const serviceUrl = urlConfig.getUrl(type);
+    const apiUrl = urlConfig.getUrl(type);
     const logParams = paramsHelper.encodeParams(params);
 
-    if (!serviceUrl) {
+    if (!apiUrl) {
       console.error('服务url未配置！');
       return false;
     }

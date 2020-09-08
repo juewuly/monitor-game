@@ -28,9 +28,6 @@ export default {
   // 设置打点指标在发送给服务端时的参数名
   setMetricParamName: monitor.setMetricParamName,
 
-  // pv、uv
-  track: monitor.track,
-
   // 配置url
   configUrl: monitor.configUrl
 

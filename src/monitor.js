@@ -27,12 +27,6 @@ class Monitor {
     return 'v1.0.0';
   }
 
-  // 设置数据发送到的url
-  setServiceUrl(url) {
-    config.setServiceUrl(url);
-    return this;
-  }
-
   // 收集点击时的数据
   getClickAndKeydown() {
     nodeHelper.on(document, 'mousedown', function(e) {
@@ -56,12 +50,6 @@ class Monitor {
   send(params, type='click') {
     log.send(params, type);
     return this;
-  }
-
-  // 
-  track() {
-    const metricParamName = config.getMetricParamName();
-    log.send();
   }
 
   /**
