@@ -606,7 +606,7 @@ var Monitor = /*#__PURE__*/function () {
       };
 
       _nodeHelper["default"].on(document, 'mousedown', function (e) {
-        var pos = e.pageX + '.' + e.pageY;
+        var pos = e.pageX || e.x + '.' + e.pageY || e.y;
         positions.push(pos);
         detectSend();
       });
