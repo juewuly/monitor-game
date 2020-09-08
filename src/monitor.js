@@ -69,7 +69,7 @@ class Monitor {
     }
 
     nodeHelper.on(document, 'mousedown', function(e) {
-      const pos = e.pageX + '.' + e.pageY;
+      const pos = e.pageX || e.x + '.' + e.pageY || e.y;
       positions.push(pos);
       detectSend();
     });
