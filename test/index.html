@@ -26,7 +26,8 @@
     MonitorGame
     // .setServiceUrl('https://dd.mgame.360.cn/t/game/common')
     .configUrl({
-      click: 'https://dd.mgame.360.cn/t/game/common'
+      click: 'https://dd.mgame.360.cn/t/game/common',
+      clickHeatMap: 'https://dd.mgame.360.cn/t/game/common'
     })
     .setBaseLogData(function() {
       return {
@@ -40,6 +41,7 @@
     .setMetricParamName('event_key')
     .setMetricAttributeName('data-wk')
     .getClickAndKeydown()
+    .getClickHeatmap()
     .send({event_key: 'test'});
   </script>
 </body>

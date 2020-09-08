@@ -54,7 +54,7 @@ class log {
     const logParams = paramsHelper.encodeParams(params);
 
     if (!apiUrl) {
-      console.error('服务url未配置！');
+      console.error(`${type}的api url未配置！`);
       return false;
     }
 

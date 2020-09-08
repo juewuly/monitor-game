@@ -46,6 +46,36 @@ class Monitor {
     return this;
   }
 
+  // 热力图打点
+  getClickHeatmap(times=2, minutes=5) {
+    let positions = [];
+    let logTimer = 0;
+    
+    const detectSend = ifForceSend => {
+      clearTimeout(logTimer);
+      if (ifForceSend || positions.length > times){
+        log.send({
+          positions: positions.join(','),
+          screenSize: `${screen.width}x${screen.height}`
+        }, 'clickHeatMap');
+        positions = [];
+        return;
+      }
+
+      logTimer = setTimeout(function(){
+        detectSend(true);
+      }, minutes * 60 * 1000);
+    }
+
+    nodeHelper.on(document, 'mousedown', function(e) {
+      console.log('热力。。。。');
+      const pos = e.pageX + '.' + e.pageY;
+      positions.push(pos);
+      detectSend();
+    });
+    return this;
+  }
+
   // 开放单独发送打点信息
   send(params, type='click') {
     log.send(params, type);

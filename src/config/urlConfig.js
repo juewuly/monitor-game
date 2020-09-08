@@ -1,4 +1,4 @@
-const urlType = ['click', 'track', 'heatMap'];
+const urlType = ['click', 'clickHeatMap'];
 const urlTypeReg = new RegExp(`^(${urlType.join('|')})$`);
 
 class urlConfig {
@@ -16,8 +16,9 @@ class urlConfig {
 
   getUrl(type) {
     if (!urlTypeReg.test(type)) {
-
+      return false;
     }
+    
     return this._urlObj[type];
   }
 

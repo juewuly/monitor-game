@@ -13,6 +13,9 @@ export default {
   // 监听单击事件的数据采集
   getClickAndKeydown: monitor.getClickAndKeydown,
 
+  // 热力图的数据采集
+  getClickHeatmap: monitor.getClickHeatmap,
+
   // 发送打点信息
   send: monitor.send,
 
