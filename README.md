@@ -32,7 +32,9 @@ $ npm i monitor-game --save
 ### Example
 ```javascript
   MonitorGame
-    .setServiceUrl('serviceUrl')
+    .configUrl({
+      click: 'serviceUrl'
+    })
     .setBaseLogData(function() {
       return {
         param1: 'param1',
